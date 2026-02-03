@@ -1,0 +1,62 @@
+name: Bug Report
+description: Report broken links, incorrect information, or other issues
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of the issue
+      placeholder: Describe the problem...
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Location
+      description: Where is the issue located?
+      placeholder: |
+        - File: README.md
+        - Section: MVVM Pattern
+        - Line: 42
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue Type
+      options:
+        - Broken Link
+        - Incorrect Information
+        - Outdated Content
+        - Typo/Grammar
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Fix
+      description: If you have a suggestion for fixing this issue
+      placeholder: How should this be corrected?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched for existing issues
+          required: true
+        - label: I have verified this is still an issue
+          required: true
