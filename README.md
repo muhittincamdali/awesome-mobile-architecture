@@ -1,164 +1,83 @@
 <div align="center">
 
-```
-╔══════════════════════════════════════════════════════════════════════════════╗
-║     _                                        __  __       _     _ _          ║
-║    / \__      _____  ___  ___  _ __ ___   __|  \/  | ___ | |__ (_) | ___     ║
-║   / _ \ \ /\ / / _ \/ __|/ _ \| '_ ` _ \ / _ \ |\/| |/ _ \| '_ \| | |/ _ \   ║
-║  / ___ \ V  V /  __/\__ \ (_) | | | | | |  __/ |  | | (_) | |_) | | |  __/   ║
-║ /_/   \_\_/\_/ \___||___/\___/|_| |_| |_|\___|_|  |_|\___/|_.__/|_|_|\___|   ║
-║                    _             _     _ _            _                       ║
-║                   / \   _ __ ___| |__ (_) |_ ___  ___| |_ _   _ _ __ ___     ║
-║                  / _ \ | '__/ __| '_ \| | __/ _ \/ __| __| | | | '__/ _ \    ║
-║                 / ___ \| | | (__| | | | | ||  __/ (__| |_| |_| | | |  __/    ║
-║                /_/   \_\_|  \___|_| |_|_|\__\___|\___|\__|\__,_|_|  \___|    ║
-║                                                                               ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-```
+# 📱 Awesome Mobile Architecture
 
-# Awesome Mobile Architecture
+**The ultimate guide to mobile architecture patterns for iOS, Flutter & React Native**
 
-**A curated collection of mobile architecture patterns, best practices, and resources**
-
-[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
-![GitHub stars](https://img.shields.io/github/stars/muhittincamdali/awesome-mobile-architecture?style=flat-square&color=yellow)
-![GitHub forks](https://img.shields.io/github/forks/muhittincamdali/awesome-mobile-architecture?style=flat-square)
-![GitHub watchers](https://img.shields.io/github/watchers/muhittincamdali/awesome-mobile-architecture?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/muhittincamdali/awesome-mobile-architecture?style=flat-square&color=blue)
-![GitHub contributors](https://img.shields.io/github/contributors/muhittincamdali/awesome-mobile-architecture?style=flat-square&color=green)
-![License](https://img.shields.io/github/license/muhittincamdali/awesome-mobile-architecture?style=flat-square)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)
-
-[Overview](#-overview) •
-[Patterns](#-architecture-patterns) •
-[Resources](#-resources) •
-[Contributing](#-contributing)
+[![Awesome](https://img.shields.io/badge/Awesome-List-FC60A8?style=for-the-badge&logo=awesomelists&logoColor=white)](https://awesome.re)
+[![Stars](https://img.shields.io/github/stars/muhittincamdali/awesome-mobile-architecture?style=for-the-badge)](https://github.com/muhittincamdali/awesome-mobile-architecture/stargazers)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 </div>
 
 ---
 
-## 📖 Overview
+## 📋 Contents
 
-This repository is a comprehensive guide to mobile application architecture. Whether you're building for iOS, Android, or cross-platform, you'll find patterns, principles, and practical resources to design robust, maintainable apps.
+- [iOS Architectures](#-ios-architectures)
+- [Flutter Architectures](#-flutter-architectures)
+- [React Native Architectures](#-react-native-architectures)
+- [Cross-Platform Patterns](#-cross-platform-patterns)
+- [Testing Strategies](#-testing-strategies)
 
-## 📑 Table of Contents
+---
 
-- [Overview](#-overview)
-- [Architecture Patterns](#-architecture-patterns)
-- [Platform-Specific](#-platform-specific)
-- [Cross-Platform](#-cross-platform)
-- [Resources](#-resources)
-- [Books](#-books)
-- [Contributing](#-contributing)
-- [License](#-license)
+## 🍎 iOS Architectures
 
-## 🏗️ Architecture Patterns
+### MVC (Model-View-Controller)
+- Apple's default pattern
+- Best for: Simple apps
 
-### **📱 MVC (Model-View-Controller)**
-- Traditional Apple-recommended pattern
-- Simple and straightforward
-- Best for small applications
+### MVVM (Model-View-ViewModel)
+- Data binding focused
+- Best for: Medium complexity apps
 
-### **🔄 MVP (Model-View-Presenter)**
-- Improved testability over MVC
-- Clear separation of concerns
-- Popular in Android development
+### Clean Architecture + VIPER
+- Strict layer separation
+- Best for: Large enterprise apps
 
-### **📊 MVVM (Model-View-ViewModel)**
-- Data binding support
-- Reactive programming friendly
-- Industry standard for modern apps
-
-### **🎯 MVI (Model-View-Intent)**
+### The Composable Architecture (TCA)
 - Unidirectional data flow
-- Predictable state management
-- Great for complex UIs
+- Best for: Complex state management
 
-### **🧹 Clean Architecture**
-- Independence from frameworks
-- Testable business logic
-- Scalable for large projects
+---
 
-### **⚡ VIPER**
-- Highly modular
-- Protocol-oriented
-- Enterprise-level applications
+## 🎯 Flutter Architectures
 
-### **🎭 TCA (The Composable Architecture)**
-- State management
-- Side effect handling
-- SwiftUI optimized
+### BLoC Pattern
+- Business Logic Component
+- Reactive streams
 
-## 🍎 Platform-Specific
+### Riverpod
+- Modern dependency injection
+- Compile-time safety
 
-### iOS
-| Pattern | Best For | Complexity |
-|---------|----------|------------|
-| MVC | Small apps | ⭐ |
-| MVVM | Medium apps | ⭐⭐ |
-| VIPER | Large apps | ⭐⭐⭐ |
-| TCA | SwiftUI apps | ⭐⭐⭐ |
+### Clean Architecture
+- Feature-first organization
+- Platform independence
 
-### Android
-| Pattern | Best For | Complexity |
-|---------|----------|------------|
-| MVP | Legacy apps | ⭐⭐ |
-| MVVM | Modern apps | ⭐⭐ |
-| MVI | Complex UIs | ⭐⭐⭐ |
-| Clean | Enterprise | ⭐⭐⭐ |
+---
 
-## 🌐 Cross-Platform
+## ⚛️ React Native Architectures
 
-- **Flutter** - BLoC, Provider, Riverpod
-- **React Native** - Redux, MobX, Zustand
-- **Kotlin Multiplatform** - Shared business logic
+### Redux Toolkit
+- Predictable state container
+- Immutable updates
+
+### Zustand
+- Lightweight alternative
+- Minimal boilerplate
+
+---
 
 ## 📚 Resources
 
-### Articles
-- [iOS Architecture Patterns](https://medium.com/ios-os-x-development/ios-architecture-patterns-ecba4c38de52)
-- [Android Architecture Guide](https://developer.android.com/topic/architecture)
-- [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-
-### Videos
-- WWDC Architecture Sessions
-- Google I/O Architecture Talks
-- Conference Presentations
-
-## 📖 Books
-
-- **Clean Architecture** - Robert C. Martin
-- **Design Patterns** - Gang of Four
-- **Dependency Injection** - Mark Seemann
-
-## 🤝 Contributing
-
-Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting PRs.
-
-1. Fork the repository
-2. Create your feature branch
-3. Add your resources
-4. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👤 Author
-
-**Muhittin Camdali**
-- GitHub: [@muhittincamdali](https://github.com/muhittincamdali)
+- [iOS Architecture Patterns](Documentation/iOS.md)
+- [Flutter Best Practices](Documentation/Flutter.md)
+- [Comparison Table](Documentation/Comparison.md)
 
 ---
 
-<div align="center">
+## 📄 License
 
-### ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=muhittincamdali/awesome-mobile-architecture&type=Date)](https://star-history.com/#muhittincamdali/awesome-mobile-architecture&Date)
-
-**If you find this helpful, please ⭐ star this repository!**
-
-</div>
+MIT • [@muhittincamdali](https://github.com/muhittincamdali)
