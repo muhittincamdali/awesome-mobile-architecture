@@ -1,50 +1,80 @@
-# Contributing to Awesome Mobile Architecture
+# Contributing to SwiftRouter
 
-First off, thank you for considering contributing! 🎉
+First off, thank you for considering contributing to SwiftRouter! It's people like you that make SwiftRouter such a great tool.
+
+## Code of Conduct
+
+This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code.
 
 ## How Can I Contribute?
 
 ### Reporting Bugs
 
-- Use the bug report template
-- Include detailed steps to reproduce
-- Specify your environment
+Before creating bug reports, please check the existing issues as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible:
+
+- **Use a clear and descriptive title**
+- **Describe the exact steps which reproduce the problem**
+- **Provide specific examples to demonstrate the steps**
+- **Describe the behavior you observed after following the steps**
+- **Explain which behavior you expected to see instead and why**
+- **Include Swift version and OS version**
 
 ### Suggesting Enhancements
 
-- Use the feature request template
-- Explain the use case clearly
-- Describe the expected behavior
+Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion, please include:
 
-### Adding New Resources
-
-1. Ensure the resource is high-quality and actively maintained
-2. Check that it's not already in the list
-3. Add it in the appropriate category
-4. Follow the existing format
+- **Use a clear and descriptive title**
+- **Provide a step-by-step description of the suggested enhancement**
+- **Provide specific examples to demonstrate the steps**
+- **Describe the current behavior and explain which behavior you expected to see instead**
+- **Explain why this enhancement would be useful**
 
 ### Pull Requests
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-addition`)
-3. Make your changes
-4. Commit with clear messages (`git commit -m 'Add: new architecture pattern'`)
-5. Push to your branch (`git push origin feature/amazing-addition`)
-6. Open a Pull Request
+1. Fork the repo and create your branch from `main`
+2. If you've added code that should be tested, add tests
+3. If you've changed APIs, update the documentation
+4. Ensure the test suite passes
+5. Make sure your code follows the existing style (SwiftLint)
+6. Issue that pull request!
+
+## Development Setup
+
+```bash
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/SwiftRouter.git
+
+# Navigate to the project
+cd SwiftRouter
+
+# Open in Xcode
+open Package.swift
+
+# Run tests
+swift test
+```
 
 ## Style Guide
 
-- Use clear, concise language
-- Follow Markdown best practices
-- Keep descriptions brief but informative
-- Include links to official documentation
+- Follow [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
+- Use SwiftLint for code style consistency
+- Write meaningful commit messages following [Conventional Commits](https://www.conventionalcommits.org/)
+- Document public APIs with DocC-compatible comments
 
-## Code of Conduct
+## Commit Messages
 
-- Be respectful and inclusive
-- Welcome newcomers
-- Focus on constructive feedback
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
 
-## Questions?
+- `feat:` A new feature
+- `fix:` A bug fix
+- `docs:` Documentation only changes
+- `style:` Code style changes (formatting, semicolons, etc)
+- `refactor:` Code change that neither fixes a bug nor adds a feature
+- `test:` Adding missing tests
+- `chore:` Changes to the build process or auxiliary tools
 
-Feel free to open an issue for any questions!
+Example: `feat(deeplink): add universal link support`
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the MIT License.
