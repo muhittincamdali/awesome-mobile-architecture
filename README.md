@@ -9,12 +9,11 @@
 </p>
 
 <p align="center">
-  <a href="https://awesome.re">
-    <img src="https://awesome.re/badge-flat2.svg" alt="Awesome"/>
-  </a>
-  <img src="https://img.shields.io/github/stars/muhittincamdali/awesome-mobile-architecture?style=flat-square" alt="Stars"/>
-  <img src="https://img.shields.io/github/forks/muhittincamdali/awesome-mobile-architecture?style=flat-square" alt="Forks"/>
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"/>
+  <a href="https://awesome.re"><img src="https://awesome.re/badge-flat2.svg" alt="Awesome"/></a>
+  <img src="https://img.shields.io/github/stars/muhittincamdali/awesome-mobile-architecture?style=for-the-badge&logo=github&color=gold" alt="Stars"/>
+  <img src="https://img.shields.io/badge/Resources-100+-blue?style=for-the-badge" alt="Resources"/>
+  <img src="https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge" alt="License"/>
+  <img src="https://img.shields.io/github/last-commit/muhittincamdali/awesome-mobile-architecture?style=for-the-badge" alt="Last Commit"/>
 </p>
 
 <p align="center">
@@ -27,8 +26,17 @@
 
 ---
 
-## Contents
+## ✨ Features
 
+- 🍎 **iOS Patterns** - MVC, MVVM, VIPER, Clean Architecture, TCA
+- 📱 **Flutter Patterns** - BLoC, Provider, Riverpod, GetX
+- ⚛️ **React Native Patterns** - Redux, MobX, Zustand
+- 📚 **Curated Resources** - 100+ handpicked articles and repos
+- 🎓 **Learning Paths** - Beginner to advanced guides
+
+---
+
+## 📋 Table of Contents
 - [Architecture Patterns](#architecture-patterns)
   - [MVC](#mvc)
   - [MVP](#mvp)
