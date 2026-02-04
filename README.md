@@ -468,3 +468,44 @@ MIT License - see [LICENSE](LICENSE).
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=muhittincamdali/awesome-mobile-architecture&type=Date" />
  </picture>
 </a>
+
+---
+
+## 🚀 How to Use This List
+
+1. **Browse by Category** - Find the architecture pattern you need
+2. **Star Favorites** - Save resources for later
+3. **Contribute** - Add missing resources via PR
+
+## 📊 Quick Reference
+
+| Pattern | Best For | Complexity |
+|---------|----------|------------|
+| MVC | Simple apps | ⭐ |
+| MVVM | Medium apps | ⭐⭐ |
+| Clean Architecture | Large apps | ⭐⭐⭐ |
+| TCA | Complex state | ⭐⭐⭐⭐ |
+
+## 📚 Learning Path
+
+```
+Beginner → MVC → MVVM → Clean Architecture → TCA/Redux
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+MIT License - see [LICENSE](LICENSE).
+
+---
+
+<div align="center">
+
+**Curated with ❤️ by [Muhittin Camdali](https://github.com/muhittincamdali)**
+
+If you find this useful, please ⭐ this repository!
+
+</div>
