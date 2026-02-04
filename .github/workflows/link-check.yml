@@ -1,0 +1,44 @@
+name: Link Check
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Run weekly on Sundays at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --accept 200,204,301,302,403,429
+            --exclude-mail
+            --exclude 'localhost'
+            --exclude '127.0.0.1'
+            --exclude 'example.com'
+            --timeout 30
+            '**/*.md'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create Issue on Failure
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: 'Broken links detected'
+          content-filepath: ./lychee/out.md
+          labels: 'documentation,bug'
