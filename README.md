@@ -456,3 +456,15 @@ MIT License - see [LICENSE](LICENSE).
 <p align="center">
   <sub>⭐ Star this repo if you find it useful!</sub>
 </p>
+
+---
+
+## 📈 Star History
+
+<a href="https://star-history.com/#muhittincamdali/awesome-mobile-architecture&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=muhittincamdali/awesome-mobile-architecture&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=muhittincamdali/awesome-mobile-architecture&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=muhittincamdali/awesome-mobile-architecture&type=Date" />
+ </picture>
+</a>
