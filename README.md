@@ -6,6 +6,8 @@
 
 ---
 
+## 🚀 Killer Feature: Architecture Analyzer CLI
+Run the `arch_analyzer.py` tool on any iOS project. It acts as an automated Technical Lead, instantly flagging legacy dependencies (like RxSwift or Alamofire) and generating a migration path to the 'Unified Core' standard.
 > **🛡️ PART OF THE 2026 UNIFIED CORE**
 > This repository is a verified component of 'The Endless March' initiative. Purified for Swift 6, zero-dependency, and engineered for maximum hardware saturation.
 > 
