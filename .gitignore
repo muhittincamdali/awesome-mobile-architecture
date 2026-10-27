@@ -16,3 +16,15 @@ node_modules/
 
 # Local working notes
 _work/
+
+# Swift, Xcode
+.build/
+.swiftpm/
+xcuserdata/
+DerivedData/
+
+# Flutter, Dart
+.dart_tool/
+build/
+coverage/
+.flutter-plugins-dependencies
