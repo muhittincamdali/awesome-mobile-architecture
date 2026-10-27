@@ -1,7 +1,8 @@
 // Character rules shared by the text fields (name, why) and the link of an entry.
 
-// Control characters and the Unicode line/paragraph separators would break the one-line rule.
-export const LINE_BREAKING = /[\u0000-\u001f\u007f\u2028\u2029]/;
+// Control characters (C0, DEL and C1, which holds the next-line character U+0085) and the Unicode
+// line/paragraph separators would break the one-line rule.
+export const LINE_BREAKING = /[\u0000-\u001f\u007f-\u009f\u2028\u2029]/;
 // Zero-width and bidirectional control characters can make rendered text read differently from
 // the reviewed source (a name that looks like another, a reason whose words appear reordered).
 // \p{Cf} covers the format characters (soft hyphen, zero-width and text-direction marks, BOM,

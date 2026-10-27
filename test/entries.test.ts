@@ -80,6 +80,16 @@ describe('validateEntries', () => {
     expect(errorsFor({ ...valid, why: 'Events in, states out\u2028from widgets.' })).toContain(
       'entries[0].why: must be a single line',
     );
+    // C1 controls: U+0085 is a line break, the others render as a replacement character.
+    for (const control of ['\u0080', '\u0085', '\u009b', '\u009f']) {
+      expect(errorsFor({ ...valid, why: `Events in, states out${control} of widgets.` })).toContain(
+        'entries[0].why: must be a single line',
+      );
+      expect(errorsFor({ ...valid, name: `Bl${control}oc` })).toContain(
+        'entries[0].name: contains a line break or control character',
+      );
+    }
+    expect(errorsFor({ ...valid, name: 'Bloc für Flutter' })).toEqual([]);
     expect(errorsFor({ ...valid, why: 'Too short.' })[0]).toMatch(/must be 20-160 characters/);
     expect(errorsFor({ ...valid, why: `A${'b'.repeat(200)}.` })[0]).toMatch(/is 202/);
     expect(errorsFor({ ...valid, why: 'events in, states out from widgets.' })).toContain(
