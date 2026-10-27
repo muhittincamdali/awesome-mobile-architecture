@@ -51,12 +51,27 @@ export function checkUrl(
 }
 
 /**
- * False for IP addresses, special-use names and single-label names such as "intranet", which
- * resolve only inside one network. A trailing dot names the same host ("localhost." is
- * "localhost"), so it is removed before the checks.
+ * The host name as one site sees it: lower case, with one trailing dot removed ("github.com."
+ * is "github.com") and without a leading "www.". Undefined when a label is empty, as in
+ * "github.com..", ".github.com" or "github..com": no public site has such a name, and treating
+ * it as another spelling of a known host would let it slip past the rules for that host.
+ */
+export function siteHostName(hostname: string): string | undefined {
+  return dnsHostName(hostname)?.replace(/^www\./, '');
+}
+
+function dnsHostName(hostname: string): string | undefined {
+  const host = hostname.toLowerCase().replace(/\.$/, '');
+  return host.split('.').includes('') ? undefined : host;
+}
+
+/**
+ * False for IP addresses, special-use names, single-label names such as "intranet", which
+ * resolve only inside one network, and names with an empty label.
  */
 function isPublicHostName(hostname: string): boolean {
-  const host = hostname.toLowerCase().replace(/\.$/, '');
+  const host = dnsHostName(hostname);
+  if (host === undefined) return false;
   if (host.startsWith('[') || /^[\d.]+$/.test(host)) return false;
   if (!host.includes('.')) return false;
   return !SPECIAL_USE_SUFFIXES.some((suffix) => host === suffix || host.endsWith(`.${suffix}`));
@@ -66,10 +81,7 @@ function isPublicHostName(hostname: string): boolean {
 export function normalizeUrl(value: string): string {
   try {
     const url = new URL(value);
-    const host = url.hostname
-      .toLowerCase()
-      .replace(/^www\./, '')
-      .replace(/\.$/, '');
+    const host = siteHostName(url.hostname) ?? url.hostname;
     const path = url.pathname.replace(/\/+$/, '').toLowerCase();
     return `${host}${path}${url.search}`;
   } catch {

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { LIMITS, isCalendarDate, normalizeUrl, validateEntries } from '../src/entries.ts';
+import { siteHostName } from '../src/url-rules.ts';
 
 const TODAY = '2026-10-28';
 
@@ -281,8 +282,28 @@ describe('validateEntries', () => {
       'https://site.example/a',
       'https://127.0.0.1./a',
       'https://0x7f.1/a',
+      'https://localhost../x',
+      'https://x.localhost../x',
+      'https://intranet../x',
+      'https://foo.test../x',
     ]) {
       expect(errorsFor({ ...entry, url })).toContain('entries[0].url: must use a public host name');
+    }
+  });
+
+  it('refuses host names with an empty label, which would dodge the GitHub repo rule', () => {
+    const { repo: _repo, ...withoutRepo } = valid;
+    for (const url of [
+      'https://github.com../felangel/bloc',
+      'https://www.github.com../felangel/bloc',
+      'https://.github.com/felangel/bloc',
+      'https://github..com/felangel/bloc',
+      'https://example.com../a',
+    ]) {
+      expect(errorsFor({ ...withoutRepo, url })).toContain(
+        'entries[0].url: must use a public host name',
+      );
+      expect(errorsFor({ ...valid, url })).toContain('entries[0].url: must use a public host name');
     }
   });
 
@@ -420,5 +441,24 @@ describe('isCalendarDate', () => {
 describe('normalizeUrl', () => {
   it('keeps query strings, which can name different pages', () => {
     expect(normalizeUrl('https://a.dev/x?p=1')).not.toBe(normalizeUrl('https://a.dev/x?p=2'));
+  });
+
+  it('gives www, upper case and one trailing dot the same key as the plain host', () => {
+    expect(normalizeUrl('https://WWW.GitHub.com./felangel/bloc/')).toBe(
+      normalizeUrl('https://github.com/felangel/bloc'),
+    );
+  });
+});
+
+describe('siteHostName', () => {
+  it('drops one trailing dot and a leading www', () => {
+    expect(siteHostName('github.com.')).toBe('github.com');
+    expect(siteHostName('www.github.com')).toBe('github.com');
+  });
+
+  it('returns undefined for a name with an empty label', () => {
+    for (const host of ['github.com..', 'www.github.com..', '.github.com', 'github..com', '']) {
+      expect(siteHostName(host)).toBeUndefined();
+    }
   });
 });

@@ -7,7 +7,7 @@ import {
   INVISIBLE,
   LINE_BREAKING,
 } from './text-rules.ts';
-import { MAX_URL_LENGTH, checkUrl, normalizeUrl } from './url-rules.ts';
+import { MAX_URL_LENGTH, checkUrl, normalizeUrl, siteHostName } from './url-rules.ts';
 
 export { normalizeUrl };
 
@@ -153,7 +153,7 @@ function checkEntry(
     fail(`${where}.repo: "${repo}" is not an owner/name pair`);
   }
   // "www.github.com" and "github.com." serve the same repositories, so they get the same repo rule.
-  if (parsedUrl && parsedUrl.hostname.replace(/^www\./, '').replace(/\.$/, '') === 'github.com') {
+  if (parsedUrl && siteHostName(parsedUrl.hostname) === 'github.com') {
     const [owner, project] = parsedUrl.pathname.split('/').filter(Boolean);
     const fromUrl = owner && project ? `${owner}/${project}` : undefined;
     if (!fromUrl) fail(`${where}.url: a GitHub link must point into a repository`);
