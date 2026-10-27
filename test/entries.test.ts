@@ -106,7 +106,16 @@ describe('validateEntries', () => {
   });
 
   it('rejects invisible and text-direction characters that hide what a reviewer reads', () => {
-    for (const hidden of ['\u200b', '\u202e', '\u2066', '\ufeff', '\u00ad']) {
+    const hiddenCharacters = [
+      ...['\u200b', '\u202e', '\u2066', '\ufeff', '\u00ad'],
+      // tag characters, assigned and unassigned
+      ...['\u{e0000}', '\u{e0001}', '\u{e0041}', '\u{e007f}'],
+      // variation selectors
+      ...['\ufe00', '\ufe0f', '\u{e0100}'],
+      // fillers and joiners that render as nothing or a blank
+      ...['\u3164', '\u034f', '\u17b4', '\u17b5', '\u115f', '\u1160', '\uffa0', '\u180b', '\u2800'],
+    ];
+    for (const hidden of hiddenCharacters) {
       expect(errorsFor({ ...valid, name: `Bl${hidden}oc` })).toContain(
         'entries[0].name: contains an invisible or text-direction character',
       );
@@ -114,6 +123,7 @@ describe('validateEntries', () => {
         errorsFor({ ...valid, why: `Events in, states out${hidden} from widgets.` }),
       ).toContain('entries[0].why: contains an invisible or text-direction character');
     }
+    expect(errorsFor({ ...valid, name: 'Bloc für Flutter – Çekirdek' })).toEqual([]);
   });
 
   it('refuses look-alike hosts written with non-ASCII letters', () => {
