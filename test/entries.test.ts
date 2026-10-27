@@ -255,6 +255,40 @@ describe('validateEntries', () => {
     }
   });
 
+  it('refuses hosts that only resolve inside one network, with or without a trailing dot', () => {
+    const { repo: _repo, ...entry } = valid;
+    for (const url of [
+      'https://localhost./',
+      'https://LOCALHOST/a',
+      'https://x.localhost/',
+      'https://x.localhost./',
+      'https://intranet/x',
+      'https://intranet./x',
+      'https://wiki.local/a',
+      'https://build.internal/a',
+      'https://nas.home.arpa/a',
+      'https://docs.test/a',
+      'https://site.example/a',
+      'https://127.0.0.1./a',
+      'https://0x7f.1/a',
+    ]) {
+      expect(errorsFor({ ...entry, url })).toContain('entries[0].url: must use a public host name');
+    }
+  });
+
+  it('keeps public hosts that merely contain a reserved word', () => {
+    const { repo: _repo, ...entry } = valid;
+    for (const url of [
+      'https://localhost.dev/a',
+      'https://local.example.com/a',
+      'https://testing.dev/a',
+      'https://example.com/a',
+      'https://pub.dev./packages/bloc',
+    ]) {
+      expect(errorsFor({ ...entry, url })).toEqual([]);
+    }
+  });
+
   it('ties a GitHub link to its repo field', () => {
     const { repo: _repo, ...withoutRepo } = valid;
     expect(errorsFor(withoutRepo)).toContain(

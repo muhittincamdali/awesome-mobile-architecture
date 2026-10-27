@@ -3,6 +3,17 @@
 import { CHARACTER_REFERENCE, CHARACTER_REFERENCE_ERROR } from './text-rules.ts';
 
 export const MAX_URL_LENGTH = 300;
+// Names reserved for local networks, tests and documentation (RFC 2606, 6761, 6762,
+// 8375 and ICANN's .internal); no public site can be reached under them.
+const SPECIAL_USE_SUFFIXES = [
+  'localhost',
+  'local',
+  'internal',
+  'home.arpa',
+  'test',
+  'invalid',
+  'example',
+];
 
 /** Checks one link and returns it parsed, or undefined when it cannot be parsed at all. */
 export function checkUrl(
@@ -28,13 +39,7 @@ export function checkUrl(
   }
   if (url.protocol !== 'https:') fail(`${where}: must use https`);
   if (url.username || url.password) fail(`${where}: must not contain credentials`);
-  if (
-    url.hostname === 'localhost' ||
-    /^[\d.]+$/.test(url.hostname) ||
-    url.hostname.startsWith('[')
-  ) {
-    fail(`${where}: must use a public host name`);
-  }
+  if (!isPublicHostName(url.hostname)) fail(`${where}: must use a public host name`);
   // `new URL` turns a Unicode host into punycode; such a host can imitate a known one
   // (a Cyrillic "а" in "github.com"), so it is refused rather than reviewed by eye.
   if (url.hostname.split('.').some((label) => label.startsWith('xn--'))) {
@@ -43,6 +48,18 @@ export function checkUrl(
   // A backslash before the closing ")" would escape it and run the link into the reason.
   if (/[()<>\\]/.test(value)) fail(`${where}: contains characters that break a Markdown link`);
   return url;
+}
+
+/**
+ * False for IP addresses, special-use names and single-label names such as "intranet", which
+ * resolve only inside one network. A trailing dot names the same host ("localhost." is
+ * "localhost"), so it is removed before the checks.
+ */
+function isPublicHostName(hostname: string): boolean {
+  const host = hostname.toLowerCase().replace(/\.$/, '');
+  if (host.startsWith('[') || /^[\d.]+$/.test(host)) return false;
+  if (!host.includes('.')) return false;
+  return !SPECIAL_USE_SUFFIXES.some((suffix) => host === suffix || host.endsWith(`.${suffix}`));
 }
 
 /** Key used to find the same page listed twice. */
