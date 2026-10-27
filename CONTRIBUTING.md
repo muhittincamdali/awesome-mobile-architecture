@@ -49,8 +49,9 @@ cd Examples/flutter/reading_list && flutter analyze && flutter test
 cd Examples/react-native/reading-list && npm ci && npm run typecheck && npm test
 ```
 
-If the iOS screen changes, regenerate the screenshots with `scripts/capture-ios-example.sh` on a
-Mac with Xcode 27.
+If the iOS or Flutter screen changes, regenerate the screenshots with
+`scripts/capture-ios-example.sh` or `scripts/capture-flutter-example.sh` on a Mac with Xcode 27
+(and Flutter 3.41 for the second).
 
 ## Change the tooling
 

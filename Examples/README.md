@@ -4,16 +4,22 @@ The same small feature, a reading list, built three times with the structure the
 in the list recommend. Read them side by side to see how the ideas map from Swift to Dart to
 TypeScript; none of them needs a third-party library.
 
-| Folder                                                 | Stack                                            | State holder                                          | Tests                                           |
-| ------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------- | ----------------------------------------------- |
-| [ios/ReadingList](ios/ReadingList)                     | Swift 6, SwiftUI, Observation (iOS 17, macOS 14) | `@Observable` `ReadingListModel` on the main actor    | 12 Swift Testing tests, macOS and iOS simulator |
-| [ios/ReadingListApp](ios/ReadingListApp)               | SwiftUI `App` using the package                  | the same model                                        | built for the iOS simulator in CI               |
-| [flutter/reading_list](flutter/reading_list)           | Flutter, Dart 3                                  | `ChangeNotifier` `ReadingListViewModel`               | 13 unit and 3 widget tests                      |
-| [react-native/reading-list](react-native/reading-list) | React Native 0.88, React 19, TypeScript          | framework-free store read with `useSyncExternalStore` | 15 Vitest tests; screen type-checked            |
+| Folder                                                       | Stack                                            | State holder                                          | Tests                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| [ios/ReadingList](ios/ReadingList)                           | Swift 6, SwiftUI, Observation (iOS 17, macOS 14) | `@Observable` `ReadingListModel` on the main actor    | 12 Swift Testing tests, macOS and iOS simulator              |
+| [ios/ReadingListApp](ios/ReadingListApp)                     | SwiftUI `App` using the package                  | the same model                                        | built for the iOS simulator in CI                            |
+| [flutter/reading_list](flutter/reading_list)                 | Flutter, Dart 3                                  | `ChangeNotifier` `ReadingListViewModel`               | 13 unit and 3 widget tests                                   |
+| [flutter/reading_list/example](flutter/reading_list/example) | Flutter `MaterialApp` using the package          | the same view model                                   | analysed in CI; run on the iOS simulator for the screenshots |
+| [react-native/reading-list](react-native/reading-list)       | React Native 0.88, React 19, TypeScript          | framework-free store read with `useSyncExternalStore` | 15 Vitest tests; screen type-checked                         |
 
 <p align="center">
 <img src="../docs/images/reading-list-ios-loaded-light.png" width="260" alt="The iOS example showing five articles, the first one marked as read">
 <img src="../docs/images/reading-list-ios-failed-dark.png" width="260" alt="The iOS example in dark mode after a failed load, with a Retry button">
+</p>
+
+<p align="center">
+<img src="../docs/images/reading-list-flutter-loaded-light.png" width="260" alt="The Flutter example on iOS showing the same five articles, the first one marked as read">
+<img src="../docs/images/reading-list-flutter-failed-dark.png" width="260" alt="The Flutter example in dark mode after a failed load, with a Retry button">
 </p>
 
 ## The feature
@@ -61,3 +67,8 @@ Open `Examples/ios/ReadingListApp/ReadingListApp.xcodeproj` in Xcode to run the 
 arguments `-scenario empty` and `-scenario failed` show the other states;
 [scripts/capture-ios-example.sh](../scripts/capture-ios-example.sh) uses them to take the
 screenshots above on a simulator.
+
+`Examples/flutter/reading_list/example` runs the Flutter feature as an app with the same three
+scenarios, chosen with `--dart-define=SCENARIO=empty` or `failed`. It keeps only the Dart code;
+[scripts/capture-flutter-example.sh](../scripts/capture-flutter-example.sh) adds the iOS runner
+with `flutter create` in a build folder and takes the Flutter screenshots on the same simulator.
