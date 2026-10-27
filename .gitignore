@@ -10,3 +10,9 @@
 
 # Logs
 *.log
+
+# Node
+node_modules/
+
+# Local working notes
+_work/

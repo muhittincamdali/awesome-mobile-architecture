@@ -1,0 +1,26 @@
+{
+  "name": "awesome-mobile-architecture",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Curated, verified links on mobile app architecture for iOS, Flutter and React Native, with the tooling that keeps the list honest.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "lint": "prettier --check src test data package.json tsconfig.json .prettierrc.json",
+    "format": "prettier --write src test data package.json tsconfig.json .prettierrc.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run && node src/cli.ts check",
+    "list:check": "node src/cli.ts check",
+    "list:render": "node src/cli.ts render",
+    "list:staleness": "node src/cli.ts staleness"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vitest": "5.0.4"
+  }
+}
