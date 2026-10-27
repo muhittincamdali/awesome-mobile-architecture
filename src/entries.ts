@@ -95,7 +95,7 @@ export function validateEntries(data: unknown, today: string): ValidationResult 
     if (firstUrl === undefined) seenUrls.set(urlKey, index);
     else report(`${where}.url: duplicate of entries[${firstUrl}]`);
 
-    const nameKey = `${entry.platform}:${entry.name.toLowerCase()}`;
+    const nameKey = `${entry.platform}:${comparableName(entry.name)}`;
     const firstName = seenNames.get(nameKey);
     if (firstName === undefined) seenNames.set(nameKey, index);
     else report(`${where}.name: "${entry.name}" already used by entries[${firstName}]`);
@@ -236,6 +236,14 @@ function checkDate(
     return;
   }
   if (value > today) fail(`${where}: ${value} is in the future`);
+}
+
+/**
+ * Key that makes names which read the same compare equal: NFKC turns a no-break or ideographic
+ * space into a plain one and full-width letters into ASCII, then runs of spaces become one.
+ */
+function comparableName(name: string): string {
+  return name.normalize('NFKC').replace(/\s+/g, ' ').toLowerCase();
 }
 
 /** True for a real date in YYYY-MM-DD form (rejects 2026-02-30 and 2026-13-01). */

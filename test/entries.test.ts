@@ -375,6 +375,22 @@ describe('validateEntries', () => {
     expect(validateEntries({ entries: [valid, elsewhere] }, TODAY).errors).toEqual([]);
   });
 
+  it('finds a name that only differs by the kind of space or by full-width letters', () => {
+    const first = { ...valid, name: 'Flutter Bloc' };
+    const others = ['Flutter\u00a0Bloc', 'Flutter\u3000Bloc', 'Flutter  bloc', '\uff26lutter Bloc'];
+    others.forEach((name, index) => {
+      const second = {
+        ...valid,
+        name,
+        url: `https://pub.dev/packages/bloc${index}`,
+        repo: undefined,
+      };
+      expect(validateEntries({ entries: [first, second] }, TODAY).errors).toEqual([
+        `entries[1].name: "${name}" already used by entries[0]`,
+      ]);
+    });
+  });
+
   it('drops invalid entries from the result', () => {
     const { entries } = validateEntries({ entries: [valid, { ...valid, url: 'x' }] }, TODAY);
     expect(entries).toHaveLength(1);
