@@ -152,7 +152,8 @@ function checkEntry(
   if (repo !== undefined && (!REPO_PATTERN.test(repo) || /\/\.{1,2}$/.test(repo))) {
     fail(`${where}.repo: "${repo}" is not an owner/name pair`);
   }
-  if (parsedUrl && parsedUrl.hostname === 'github.com') {
+  // "www.github.com" and "github.com." serve the same repositories, so they get the same repo rule.
+  if (parsedUrl && parsedUrl.hostname.replace(/^www\./, '').replace(/\.$/, '') === 'github.com') {
     const [owner, project] = parsedUrl.pathname.split('/').filter(Boolean);
     const fromUrl = owner && project ? `${owner}/${project}` : undefined;
     if (!fromUrl) fail(`${where}.url: a GitHub link must point into a repository`);
@@ -274,7 +275,10 @@ function checkUrl(value: string, where: string, fail: (message: string) => void)
 export function normalizeUrl(value: string): string {
   try {
     const url = new URL(value);
-    const host = url.hostname.toLowerCase().replace(/^www\./, '');
+    const host = url.hostname
+      .toLowerCase()
+      .replace(/^www\./, '')
+      .replace(/\.$/, '');
     const path = url.pathname.replace(/\/+$/, '').toLowerCase();
     return `${host}${path}${url.search}`;
   } catch {

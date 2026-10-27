@@ -221,6 +221,22 @@ describe('validateEntries', () => {
     );
   });
 
+  it('applies the GitHub rules to www.github.com and github.com. as well', () => {
+    const { repo: _repo, ...withoutRepo } = valid;
+    for (const url of [
+      'https://www.github.com/felangel/bloc',
+      'https://github.com./felangel/bloc',
+    ]) {
+      expect(errorsFor({ ...withoutRepo, url })).toContain(
+        'entries[0].repo: required for a GitHub link ("felangel/bloc")',
+      );
+      expect(errorsFor({ ...valid, url, repo: 'other/bloc' })).toContain(
+        'entries[0].repo: "other/bloc" does not match the link ("felangel/bloc")',
+      );
+      expect(errorsFor({ ...valid, url })).toEqual([]);
+    }
+  });
+
   it('rejects repo values that are not a plain owner/name pair', () => {
     for (const repo of [
       'felangel',
@@ -250,6 +266,10 @@ describe('validateEntries', () => {
   it('finds the same page listed twice, ignoring case, www and a trailing slash', () => {
     const copy = { ...valid, name: 'Bloc again', url: 'https://www.GitHub.com/felangel/bloc/' };
     expect(validateEntries({ entries: [valid, copy] }, TODAY).errors).toEqual([
+      'entries[1].url: duplicate of entries[0]',
+    ]);
+    const dotted = { ...valid, name: 'Bloc again', url: 'https://github.com./felangel/bloc' };
+    expect(validateEntries({ entries: [valid, dotted] }, TODAY).errors).toEqual([
       'entries[1].url: duplicate of entries[0]',
     ]);
   });
