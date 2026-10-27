@@ -1,0 +1,38 @@
+{
+  "name": "Mobile Architecture",
+  "repository": "muhittincamdali/awesome-mobile-architecture",
+  "tagline": {
+    "en": "Checked links on app architecture for iOS, Flutter and React Native, each with the reason to read it."
+  },
+  "tags": {
+    "en": [
+      "iOS",
+      "Flutter",
+      "React Native",
+      "Checked weekly"
+    ]
+  },
+  "motif": "phone",
+  "buttons": [
+    "start",
+    "guides",
+    "examples"
+  ],
+  "links": {
+    "guides": "docs/guides/",
+    "examples": "Examples/"
+  },
+  "languages": [
+    "en",
+    "tr",
+    "zh-CN",
+    "ja",
+    "ko",
+    "es",
+    "de",
+    "fr",
+    "pt-BR",
+    "ru"
+  ],
+  "socialTheme": "dark"
+}

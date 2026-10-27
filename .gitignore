@@ -28,3 +28,6 @@ DerivedData/
 build/
 coverage/
 .flutter-plugins-dependencies
+
+# Link checker cache
+.lycheecache

@@ -1,17 +1,42 @@
 version: 2
 updates:
-  - package-ecosystem: "swift"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-    commit-message:
-      prefix: "chore(deps):"
-  
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-    labels:
-      - "ci"
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    groups:
+      npm:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/Examples/react-native/reading-list"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    groups:
+      react-native-example:
+        patterns:
+          - "*"
+  - package-ecosystem: "pub"
+    directory: "/Examples/flutter/reading_list"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore"
+    groups:
+      flutter-example:
+        patterns:
+          - "*"
