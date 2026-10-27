@@ -157,6 +157,54 @@ describe('validateEntries', () => {
     expect(errorsFor({ ...valid, name: 'Bloc für Flutter – Çekirdek' })).toEqual([]);
   });
 
+  it('rejects HTML character references, which GitHub decodes before the other rules can see them', () => {
+    const references = [
+      // right-to-left override, zero-width space and "@" in every spelling GitHub decodes
+      ...['&#x202E;', '&#X202e;', '&#8238;', '&#0008238;', '&#x200B;', '&#8203;', '&#64;'],
+      ...['&ZeroWidthSpace;', '&rlm;', '&lrm;', '&commat;', '&nbsp;', '&AMP;'],
+      // an unterminated or unknown reference is refused too, so no spelling needs a lookup table
+      ...['&#x202E', '&#', '&notaname;'],
+    ];
+    for (const reference of references) {
+      expect(errorsFor({ ...valid, name: `Foo${reference}bar` })).toContain(
+        'entries[0].name: contains an HTML character reference; write the character itself',
+      );
+      expect(
+        errorsFor({ ...valid, why: `Events in, states${reference} out of widgets.` }),
+      ).toContain(
+        'entries[0].why: contains an HTML character reference; write the character itself',
+      );
+    }
+    // x&#64;evil.com renders as a mailto link even though the source holds no "@".
+    expect(errorsFor({ ...valid, why: 'Write to x&#64;evil.com for the slides.' })).toContain(
+      'entries[0].why: contains an HTML character reference; write the character itself',
+    );
+    // Inside a link target the reference is decoded too: this would point to evil.com with
+    // "github.com" as a user name, while `new URL` sees the host "github.com&".
+    expect(errorsFor({ ...valid, url: 'https://github.com&#64;evil.com/' })).toContain(
+      'entries[0].url: contains an HTML character reference; write the character itself',
+    );
+    expect(errorsFor({ ...valid, url: 'https://example.com/a&#x202E;b' })).toContain(
+      'entries[0].url: contains an HTML character reference; write the character itself',
+    );
+  });
+
+  it('keeps a plain ampersand that is not a character reference', () => {
+    expect(errorsFor({ ...valid, name: 'Q&A' })).toEqual([]);
+    expect(errorsFor({ ...valid, name: 'Tips & tricks' })).toEqual([]);
+    expect(errorsFor({ ...valid, why: 'Events in & states out, kept out of widgets.' })).toEqual(
+      [],
+    );
+    expect(
+      errorsFor({
+        ...valid,
+        name: 'Bloc docs',
+        url: 'https://example.com/search?q=bloc&lang=en',
+        repo: undefined,
+      }),
+    ).toEqual([]);
+  });
+
   it('refuses look-alike hosts written with non-ASCII letters', () => {
     const { repo: _repo, ...entry } = valid;
     expect(

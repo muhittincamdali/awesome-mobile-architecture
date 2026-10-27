@@ -57,6 +57,12 @@ const WHY_FORBIDDEN = /[[\]<>|\\]/;
 // GitHub turns a bare URL, a "www." host or an e-mail address into a link, which would skip the
 // https, public-host and ASCII-host rules that `url` is held to.
 const WHY_AUTOLINK = /[a-z][a-z0-9+.-]*:\/\/|www\.|\b(?:mailto|xmpp):|[\w.+-]@[\w-]+\./i;
+// GitHub decodes "&#x202E;", "&#64;" and named references such as "&ZeroWidthSpace;" in text and
+// in link targets, so the rendered page would hold a character the rules above never saw. Any
+// "&#" and any "&name;" is refused, which needs no list of the names GitHub knows.
+const CHARACTER_REFERENCE = /&(?:#|[A-Za-z][A-Za-z0-9]*;)/;
+const CHARACTER_REFERENCE_ERROR =
+  'contains an HTML character reference; write the character itself';
 const HYPE_WORDS =
   /\b(?:best|awesome|ultimate|world[- ]class|blazing(?:ly)?|revolutionary|must[- ]have|gold standard|game[- ]changer|enterprise[- ]grade|#1)\b/i;
 
@@ -201,6 +207,7 @@ function checkName(name: string, where: string, fail: (message: string) => void)
   if (LINE_BREAKING.test(name)) fail(`${where}: contains a line break or control character`);
   if (NAME_FORBIDDEN.test(name)) fail(`${where}: contains Markdown or HTML syntax`);
   if (INVISIBLE.test(name)) fail(`${where}: contains an invisible or text-direction character`);
+  if (CHARACTER_REFERENCE.test(name)) fail(`${where}: ${CHARACTER_REFERENCE_ERROR}`);
 }
 
 function checkWhy(why: string, where: string, fail: (message: string) => void): void {
@@ -217,6 +224,7 @@ function checkWhy(why: string, where: string, fail: (message: string) => void): 
     fail(`${where}: contains a link or e-mail address; the link belongs in url`);
   }
   if (INVISIBLE.test(why)) fail(`${where}: contains an invisible or text-direction character`);
+  if (CHARACTER_REFERENCE.test(why)) fail(`${where}: ${CHARACTER_REFERENCE_ERROR}`);
   if ((why.match(/`/g) ?? []).length % 2 !== 0) fail(`${where}: has an unclosed code span`);
   const hype = HYPE_WORDS.exec(why);
   if (hype)
@@ -245,6 +253,7 @@ function checkUrl(value: string, where: string, fail: (message: string) => void)
     fail(`${where}: contains whitespace`);
     return undefined;
   }
+  if (CHARACTER_REFERENCE.test(value)) fail(`${where}: ${CHARACTER_REFERENCE_ERROR}`);
   let url: URL;
   try {
     url = new URL(value);
