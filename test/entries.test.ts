@@ -105,6 +105,24 @@ describe('validateEntries', () => {
     );
   });
 
+  it('rejects text in the why line that GitHub would turn into a link', () => {
+    const message = 'entries[0].why: contains a link or e-mail address; the link belongs in url';
+    for (const why of [
+      'Mirrors the docs at www.gіthub.com for offline use.',
+      'Mirrors the docs at WWW.example.org for offline use.',
+      'A local copy is served on http://192.168.0.1 here.',
+      'Read the long version at https://xn--gthub-n4a.com today.',
+      'Older notes live on ftp://example.org in a zip.',
+      'Ask for access through mailto:team@example.org first.',
+      'Ask the authors at team@example.org for the slides.',
+    ]) {
+      expect(errorsFor({ ...valid, why })).toContain(message);
+    }
+    expect(errorsFor({ ...valid, why: 'Uses `@Observable` models owned with `@State`.' })).toEqual(
+      [],
+    );
+  });
+
   it('rejects invisible and text-direction characters that hide what a reviewer reads', () => {
     const hiddenCharacters = [
       ...['\u200b', '\u202e', '\u2066', '\ufeff', '\u00ad'],

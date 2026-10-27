@@ -53,6 +53,9 @@ const INVISIBLE =
 // Characters that would change the Markdown or HTML around an entry when it is rendered.
 const NAME_FORBIDDEN = /[[\]<>`|*]/;
 const WHY_FORBIDDEN = /[[\]<>|]/;
+// GitHub turns a bare URL, a "www." host or an e-mail address into a link, which would skip the
+// https, public-host and ASCII-host rules that `url` is held to.
+const WHY_AUTOLINK = /[a-z][a-z0-9+.-]*:\/\/|www\.|\b(?:mailto|xmpp):|[\w.+-]@[\w-]+\./i;
 const HYPE_WORDS =
   /\b(?:best|awesome|ultimate|world[- ]class|blazing(?:ly)?|revolutionary|must[- ]have|gold standard|game[- ]changer|enterprise[- ]grade|#1)\b/i;
 
@@ -208,6 +211,9 @@ function checkWhy(why: string, where: string, fail: (message: string) => void): 
   if (!/^[A-Z`@]/.test(why)) fail(`${where}: must start with a capital letter or code`);
   if (!why.endsWith('.')) fail(`${where}: must end with a full stop`);
   if (WHY_FORBIDDEN.test(why)) fail(`${where}: contains Markdown link or HTML syntax`);
+  if (WHY_AUTOLINK.test(why)) {
+    fail(`${where}: contains a link or e-mail address; the link belongs in url`);
+  }
   if (INVISIBLE.test(why)) fail(`${where}: contains an invisible or text-direction character`);
   if ((why.match(/`/g) ?? []).length % 2 !== 0) fail(`${where}: has an unclosed code span`);
   const hype = HYPE_WORDS.exec(why);
