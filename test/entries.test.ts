@@ -105,6 +105,33 @@ describe('validateEntries', () => {
     );
   });
 
+  it('rejects invisible and text-direction characters that hide what a reviewer reads', () => {
+    for (const hidden of ['\u200b', '\u202e', '\u2066', '\ufeff', '\u00ad']) {
+      expect(errorsFor({ ...valid, name: `Bl${hidden}oc` })).toContain(
+        'entries[0].name: contains an invisible or text-direction character',
+      );
+      expect(
+        errorsFor({ ...valid, why: `Events in, states out${hidden} from widgets.` }),
+      ).toContain('entries[0].why: contains an invisible or text-direction character');
+    }
+  });
+
+  it('refuses look-alike hosts written with non-ASCII letters', () => {
+    const { repo: _repo, ...entry } = valid;
+    expect(
+      errorsFor({ ...entry, url: 'https://g\u0456thub.com/felangel/bloc' }).join('\n'),
+    ).toContain('uses an internationalised host name');
+    expect(errorsFor({ ...entry, url: 'https://xn--bcher-kva.example/' }).join('\n')).toContain(
+      'uses an internationalised host name',
+    );
+  });
+
+  it('treats a __proto__ key as an unknown key instead of a prototype change', () => {
+    const entry = JSON.parse(`{"__proto__": {"polluted": true}, ${JSON.stringify(valid).slice(1)}`);
+    expect(errorsFor(entry)).toEqual(['entries[0]: unknown key "__proto__"']);
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
+
   it('turns marketing words into an error that asks for a reason', () => {
     expect(errorsFor({ ...valid, why: 'The best state library for Flutter apps.' })[0]).toMatch(
       /"best" is a claim/,

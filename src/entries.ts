@@ -42,6 +42,9 @@ const REPO_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})\/[A-Za-z0-9._-]{1,100}$
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 // Control characters and the Unicode line/paragraph separators would break the one-line rule.
 const LINE_BREAKING = /[\u0000-\u001f\u007f\u2028\u2029]/;
+// Zero-width and bidirectional control characters can make rendered text read differently from
+// the reviewed source (a name that looks like another, a reason whose words appear reordered).
+const INVISIBLE = /[\u00ad\u061c\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff]/;
 // Characters that would change the Markdown or HTML around an entry when it is rendered.
 const NAME_FORBIDDEN = /[[\]<>`|*]/;
 const WHY_FORBIDDEN = /[[\]<>|]/;
@@ -187,6 +190,7 @@ function checkName(name: string, where: string, fail: (message: string) => void)
     fail(`${where}: longer than ${LIMITS.maxNameLength} characters`);
   if (LINE_BREAKING.test(name)) fail(`${where}: contains a line break or control character`);
   if (NAME_FORBIDDEN.test(name)) fail(`${where}: contains Markdown or HTML syntax`);
+  if (INVISIBLE.test(name)) fail(`${where}: contains an invisible or text-direction character`);
 }
 
 function checkWhy(why: string, where: string, fail: (message: string) => void): void {
@@ -199,6 +203,7 @@ function checkWhy(why: string, where: string, fail: (message: string) => void): 
   if (!/^[A-Z`@]/.test(why)) fail(`${where}: must start with a capital letter or code`);
   if (!why.endsWith('.')) fail(`${where}: must end with a full stop`);
   if (WHY_FORBIDDEN.test(why)) fail(`${where}: contains Markdown link or HTML syntax`);
+  if (INVISIBLE.test(why)) fail(`${where}: contains an invisible or text-direction character`);
   if ((why.match(/`/g) ?? []).length % 2 !== 0) fail(`${where}: has an unclosed code span`);
   const hype = HYPE_WORDS.exec(why);
   if (hype)
@@ -242,6 +247,11 @@ function checkUrl(value: string, where: string, fail: (message: string) => void)
     url.hostname.startsWith('[')
   ) {
     fail(`${where}: must use a public host name`);
+  }
+  // `new URL` turns a Unicode host into punycode; such a host can imitate a known one
+  // (a Cyrillic "а" in "github.com"), so it is refused rather than reviewed by eye.
+  if (url.hostname.split('.').some((label) => label.startsWith('xn--'))) {
+    fail(`${where}: uses an internationalised host name; link the ASCII host instead`);
   }
   if (/[()<>]/.test(value)) fail(`${where}: contains characters that break a Markdown link`);
   return url;
