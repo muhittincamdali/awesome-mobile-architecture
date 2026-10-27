@@ -23,6 +23,8 @@ README is now generated from validated data.
   entry was last checked more than 365 days ago.
 - A reading list example in SwiftUI, Flutter and React Native that implements the same rules,
   with 12 Swift Testing, 16 Flutter and 15 Vitest tests, and an iOS app built in CI.
+- Screenshots of the iOS, Flutter and React Native examples, each taken on an iPhone simulator by
+  a script in `scripts/`.
 - Guides: choosing an architecture, the iOS 27 UIScene life cycle requirement, and how the list
   is kept current.
 - Shared repository kit: banner, badges, social preview, CI, link and wording checks.
