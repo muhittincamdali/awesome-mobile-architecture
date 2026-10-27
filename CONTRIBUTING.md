@@ -21,8 +21,8 @@ a removal of an outdated entry is as valuable as a new one.
     ```
 
     The rules for each field are in [How the list is kept current](docs/guides/keeping-the-list-current.md).
-    The short version: `why` is one sentence of 20-160 characters that says what the reader gets,
-    `verified` is today's date, and a GitHub link needs the matching `repo`.
+    The short version: `why` is one sentence of 20-160 characters that says what the reader gets
+    and holds no link of its own, `verified` is today's date, and a GitHub link needs the matching `repo`.
 
 3. Render the README and run the checks (Node 24):
 

@@ -7,15 +7,15 @@ This page describes the rules each entry follows and the checks that enforce the
 
 Entries live in [data/entries.json](../../data/entries.json), not in the README. Each one has:
 
-| Field      | Rule                                                                                           |
-| ---------- | ---------------------------------------------------------------------------------------------- |
-| `name`     | At most 60 characters, no Markdown or HTML syntax, no invisible or text-direction characters   |
-| `url`      | `https`, a public ASCII host name, no credentials, at most 300 characters                      |
-| `platform` | `concepts`, `ios`, `flutter` or `react-native`                                                 |
-| `category` | `guidance`, `state`, `dependency-injection`, `navigation`, `samples`, `testing` or `tooling`   |
-| `why`      | One sentence of 20-160 characters that says what the reader gets; marketing words are refused |
-| `repo`     | `owner/name` of the GitHub repository; required for a GitHub link and must match it            |
-| `verified` | The day a person last opened the link and checked the `why` line                               |
+| Field      | Rule                                                                                                                                            |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`     | At most 60 characters, no Markdown or HTML syntax or backslash, no invisible or text-direction characters                                       |
+| `url`      | `https`, a public ASCII host name, no credentials, no parentheses or backslash, at most 300 characters                                          |
+| `platform` | `concepts`, `ios`, `flutter` or `react-native`                                                                                                  |
+| `category` | `guidance`, `state`, `dependency-injection`, `navigation`, `samples`, `testing` or `tooling`                                                    |
+| `why`      | One sentence of 20-160 characters that says what the reader gets; no links, e-mail addresses, backslashes, hidden characters or marketing words |
+| `repo`     | `owner/name` of the GitHub repository; required for a GitHub link (also `www.github.com`) and must match it                                     |
+| `verified` | The day a person last opened the link and checked the `why` line                                                                                |
 
 `npm run list:render` writes the README section from this file, sorted by platform, category and
 name. Duplicate links (ignoring case, `www.` and a trailing slash) and duplicate names on one
