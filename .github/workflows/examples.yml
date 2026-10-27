@@ -1,0 +1,60 @@
+# Builds and tests the reading list example on each platform with the shared reusable workflows,
+# and builds the iOS example app for the simulator.
+name: Examples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ios-package:
+    permissions:
+      contents: read
+    uses: muhittincamdali/.github/.github/workflows/swift-ci.yml@59e72703c617cfab0c12482c477e706c485ed683 # v1.1.1
+    with:
+      working-directory: Examples/ios/ReadingList
+      platforms: '["iOS","macOS"]'
+      scheme: ReadingList
+      test-on-simulator: true
+
+  flutter:
+    permissions:
+      contents: read
+    uses: muhittincamdali/.github/.github/workflows/flutter-ci.yml@59e72703c617cfab0c12482c477e706c485ed683 # v1.1.1
+    with:
+      working-directory: Examples/flutter/reading_list
+      coverage: false
+
+  react-native:
+    permissions:
+      contents: read
+    uses: muhittincamdali/.github/.github/workflows/node-ci.yml@59e72703c617cfab0c12482c477e706c485ed683 # v1.1.1
+    with:
+      working-directory: Examples/react-native/reading-list
+      node-versions: '["24"]'
+
+  ios-app:
+    name: ReadingListApp (iOS Simulator)
+    runs-on: macos-26
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Toolchain
+        run: xcodebuild -version
+
+      - name: Build
+        working-directory: Examples/ios/ReadingListApp
+        run: |
+          set -o pipefail
+          xcodebuild build -project ReadingListApp.xcodeproj -scheme ReadingListApp \
+            -destination "generic/platform=iOS Simulator" -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO -quiet
