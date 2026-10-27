@@ -9,8 +9,8 @@
     "node": ">=24"
   },
   "scripts": {
-    "lint": "prettier --check src test data package.json tsconfig.json .prettierrc.json",
-    "format": "prettier --write src test data package.json tsconfig.json .prettierrc.json",
+    "lint": "prettier --check src test data package.json tsconfig.json vitest.config.ts .prettierrc.json",
+    "format": "prettier --write src test data package.json tsconfig.json vitest.config.ts .prettierrc.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run && node src/cli.ts check",
     "list:check": "node src/cli.ts check",
