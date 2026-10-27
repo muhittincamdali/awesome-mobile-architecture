@@ -1,6 +1,16 @@
 // Schema and validation for data/entries.json, the single source of the list in README.md.
 // The file arrives through pull requests, so every field is checked and every size is bounded.
 
+import {
+  CHARACTER_REFERENCE,
+  CHARACTER_REFERENCE_ERROR,
+  INVISIBLE,
+  LINE_BREAKING,
+} from './text-rules.ts';
+import { MAX_URL_LENGTH, checkUrl, normalizeUrl } from './url-rules.ts';
+
+export { normalizeUrl };
+
 export const PLATFORMS = ['concepts', 'ios', 'flutter', 'react-native'] as const;
 export type Platform = (typeof PLATFORMS)[number];
 
@@ -34,22 +44,12 @@ export const LIMITS = {
   maxNameLength: 60,
   minWhyLength: 20,
   maxWhyLength: 160,
-  maxUrlLength: 300,
+  maxUrlLength: MAX_URL_LENGTH,
 } as const;
 
 const ENTRY_KEYS = new Set(['name', 'url', 'platform', 'category', 'why', 'repo', 'verified']);
 const REPO_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})\/[A-Za-z0-9._-]{1,100}$/;
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
-// Control characters and the Unicode line/paragraph separators would break the one-line rule.
-const LINE_BREAKING = /[\u0000-\u001f\u007f\u2028\u2029]/;
-// Zero-width and bidirectional control characters can make rendered text read differently from
-// the reviewed source (a name that looks like another, a reason whose words appear reordered).
-// \p{Cf} covers the format characters (soft hyphen, zero-width and text-direction marks, BOM,
-// assigned tag characters). The rest render as nothing or as a blank yet are letters or marks:
-// combining grapheme joiner, Hangul and Khmer fillers, variation selectors, Braille blank, and
-// the whole tag block including its unassigned code points.
-const INVISIBLE =
-  /[\p{Cf}\u034f\u115f\u1160\u17b4\u17b5\u180b-\u180f\u2800\u3164\ufe00-\ufe0f\uffa0\u{e0000}-\u{e007f}\u{e0100}-\u{e01ef}]/u;
 // Characters that would change the Markdown or HTML around an entry when it is rendered. A
 // backslash escapes the character after it, so a name ending in one would swallow the closing "]".
 const NAME_FORBIDDEN = /[[\]<>`|*\\]/;
@@ -57,12 +57,6 @@ const WHY_FORBIDDEN = /[[\]<>|\\]/;
 // GitHub turns a bare URL, a "www." host or an e-mail address into a link, which would skip the
 // https, public-host and ASCII-host rules that `url` is held to.
 const WHY_AUTOLINK = /[a-z][a-z0-9+.-]*:\/\/|www\.|\b(?:mailto|xmpp):|[\w.+-]@[\w-]+\./i;
-// GitHub decodes "&#x202E;", "&#64;" and named references such as "&ZeroWidthSpace;" in text and
-// in link targets, so the rendered page would hold a character the rules above never saw. Any
-// "&#" and any "&name;" is refused, which needs no list of the names GitHub knows.
-const CHARACTER_REFERENCE = /&(?:#|[A-Za-z][A-Za-z0-9]*;)/;
-const CHARACTER_REFERENCE_ERROR =
-  'contains an HTML character reference; write the character itself';
 const HYPE_WORDS =
   /\b(?:best|awesome|ultimate|world[- ]class|blazing(?:ly)?|revolutionary|must[- ]have|gold standard|game[- ]changer|enterprise[- ]grade|#1)\b/i;
 
@@ -242,57 +236,6 @@ function checkDate(
     return;
   }
   if (value > today) fail(`${where}: ${value} is in the future`);
-}
-
-function checkUrl(value: string, where: string, fail: (message: string) => void): URL | undefined {
-  if (value.length > LIMITS.maxUrlLength) {
-    fail(`${where}: longer than ${LIMITS.maxUrlLength} characters`);
-    return undefined;
-  }
-  if (/\s/.test(value)) {
-    fail(`${where}: contains whitespace`);
-    return undefined;
-  }
-  if (CHARACTER_REFERENCE.test(value)) fail(`${where}: ${CHARACTER_REFERENCE_ERROR}`);
-  let url: URL;
-  try {
-    url = new URL(value);
-  } catch {
-    fail(`${where}: "${value}" is not a URL`);
-    return undefined;
-  }
-  if (url.protocol !== 'https:') fail(`${where}: must use https`);
-  if (url.username || url.password) fail(`${where}: must not contain credentials`);
-  if (
-    url.hostname === 'localhost' ||
-    /^[\d.]+$/.test(url.hostname) ||
-    url.hostname.startsWith('[')
-  ) {
-    fail(`${where}: must use a public host name`);
-  }
-  // `new URL` turns a Unicode host into punycode; such a host can imitate a known one
-  // (a Cyrillic "а" in "github.com"), so it is refused rather than reviewed by eye.
-  if (url.hostname.split('.').some((label) => label.startsWith('xn--'))) {
-    fail(`${where}: uses an internationalised host name; link the ASCII host instead`);
-  }
-  // A backslash before the closing ")" would escape it and run the link into the reason.
-  if (/[()<>\\]/.test(value)) fail(`${where}: contains characters that break a Markdown link`);
-  return url;
-}
-
-/** Key used to find the same page listed twice. */
-export function normalizeUrl(value: string): string {
-  try {
-    const url = new URL(value);
-    const host = url.hostname
-      .toLowerCase()
-      .replace(/^www\./, '')
-      .replace(/\.$/, '');
-    const path = url.pathname.replace(/\/+$/, '').toLowerCase();
-    return `${host}${path}${url.search}`;
-  } catch {
-    return value.toLowerCase();
-  }
 }
 
 /** True for a real date in YYYY-MM-DD form (rejects 2026-02-30 and 2026-13-01). */
