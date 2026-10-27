@@ -50,9 +50,10 @@ const LINE_BREAKING = /[\u0000-\u001f\u007f\u2028\u2029]/;
 // the whole tag block including its unassigned code points.
 const INVISIBLE =
   /[\p{Cf}\u034f\u115f\u1160\u17b4\u17b5\u180b-\u180f\u2800\u3164\ufe00-\ufe0f\uffa0\u{e0000}-\u{e007f}\u{e0100}-\u{e01ef}]/u;
-// Characters that would change the Markdown or HTML around an entry when it is rendered.
-const NAME_FORBIDDEN = /[[\]<>`|*]/;
-const WHY_FORBIDDEN = /[[\]<>|]/;
+// Characters that would change the Markdown or HTML around an entry when it is rendered. A
+// backslash escapes the character after it, so a name ending in one would swallow the closing "]".
+const NAME_FORBIDDEN = /[[\]<>`|*\\]/;
+const WHY_FORBIDDEN = /[[\]<>|\\]/;
 // GitHub turns a bare URL, a "www." host or an e-mail address into a link, which would skip the
 // https, public-host and ASCII-host rules that `url` is held to.
 const WHY_AUTOLINK = /[a-z][a-z0-9+.-]*:\/\/|www\.|\b(?:mailto|xmpp):|[\w.+-]@[\w-]+\./i;
@@ -264,7 +265,8 @@ function checkUrl(value: string, where: string, fail: (message: string) => void)
   if (url.hostname.split('.').some((label) => label.startsWith('xn--'))) {
     fail(`${where}: uses an internationalised host name; link the ASCII host instead`);
   }
-  if (/[()<>]/.test(value)) fail(`${where}: contains characters that break a Markdown link`);
+  // A backslash before the closing ")" would escape it and run the link into the reason.
+  if (/[()<>\\]/.test(value)) fail(`${where}: contains characters that break a Markdown link`);
   return url;
 }
 

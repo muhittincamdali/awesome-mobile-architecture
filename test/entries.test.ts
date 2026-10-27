@@ -105,6 +105,19 @@ describe('validateEntries', () => {
     );
   });
 
+  it('rejects a backslash, which would escape the brackets of the rendered link', () => {
+    expect(errorsFor({ ...valid, name: 'Bloc\\' })).toContain(
+      'entries[0].name: contains Markdown or HTML syntax',
+    );
+    expect(errorsFor({ ...valid, why: 'Events in, states out \\`from widgets`.' })).toContain(
+      'entries[0].why: contains Markdown link or HTML syntax',
+    );
+    const { repo: _repo, ...entry } = valid;
+    expect(errorsFor({ ...entry, url: 'https://example.org/docs\\' })).toContain(
+      'entries[0].url: contains characters that break a Markdown link',
+    );
+  });
+
   it('rejects text in the why line that GitHub would turn into a link', () => {
     const message = 'entries[0].why: contains a link or e-mail address; the link belongs in url';
     for (const why of [
