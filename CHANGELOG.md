@@ -37,8 +37,9 @@ README is now generated from validated data.
 
 - `scripts/arch_analyzer.py`, which printed fixed text instead of analysing a project, and the
   README section that described it as an analyzer.
-- README claims without sources, including the "Unified Core" section, the description of
-  widely used networking and reactive libraries as legacy dependencies, and star counts typed by hand.
+- README claims without sources, including a section built around a slogan, the description of
+  widely used networking and reactive libraries as legacy dependencies, and star counts typed by
+  hand.
 - The case studies, pattern deep dives, comparison matrix and podcast list under `docs/`, which
   contained figures and code without sources.
 - Entries that pointed to the wrong project, and the separate Android section (Android-only
