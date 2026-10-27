@@ -14,8 +14,8 @@ README is now generated from validated data.
 
 - `data/entries.json` with 57 entries for iOS, Flutter, React Native and platform-independent
   concepts, each with a one-line reason and the date it was checked.
-- `npm test` validates the data (fields, https links, one-line reasons without marketing words,
-  duplicates, bounded sizes) and fails when README.md does not show the current list;
+- `npm test` validates the data (fields, https links with ASCII hosts, one-line reasons without
+  marketing words or hidden characters, duplicates, bounded sizes) and fails when README.md does not show the current list;
   `npm run list:render` writes the list section.
 - `npm run list:staleness` and a weekly Staleness workflow that fail when a listed GitHub
   repository is archived, disabled, deleted, renamed or has had no push for 540 days, or when an
