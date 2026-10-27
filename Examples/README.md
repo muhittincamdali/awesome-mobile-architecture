@@ -10,7 +10,7 @@ TypeScript; none of them needs a third-party library.
 | [ios/ReadingListApp](ios/ReadingListApp)                     | SwiftUI `App` using the package                  | the same model                                        | built for the iOS simulator in CI                            |
 | [flutter/reading_list](flutter/reading_list)                 | Flutter, Dart 3                                  | `ChangeNotifier` `ReadingListViewModel`               | 13 unit and 3 widget tests                                   |
 | [flutter/reading_list/example](flutter/reading_list/example) | Flutter `MaterialApp` using the package          | the same view model                                   | analysed in CI; run on the iOS simulator for the screenshots |
-| [react-native/reading-list](react-native/reading-list)       | React Native 0.88, React 19, TypeScript          | framework-free store read with `useSyncExternalStore` | 15 Vitest tests; screen type-checked                         |
+| [react-native/reading-list](react-native/reading-list)       | React Native 0.88, React 19, TypeScript          | framework-free store read with `useSyncExternalStore` | 15 Vitest tests; screen and `example/App.tsx` type-checked   |
 
 <p align="center">
 <img src="../docs/images/reading-list-ios-loaded-light.png" width="260" alt="The iOS example showing five articles, the first one marked as read">
@@ -20,6 +20,11 @@ TypeScript; none of them needs a third-party library.
 <p align="center">
 <img src="../docs/images/reading-list-flutter-loaded-light.png" width="260" alt="The Flutter example on iOS showing the same five articles, the first one marked as read">
 <img src="../docs/images/reading-list-flutter-failed-dark.png" width="260" alt="The Flutter example in dark mode after a failed load, with a Retry button">
+</p>
+
+<p align="center">
+<img src="../docs/images/reading-list-react-native-loaded-light.png" width="260" alt="The React Native example on iOS showing the same five articles, the first one marked as read">
+<img src="../docs/images/reading-list-react-native-failed-light.png" width="260" alt="The React Native example after a failed load, with a Retry button">
 </p>
 
 ## The feature
@@ -72,3 +77,10 @@ screenshots above on a simulator.
 scenarios, chosen with `--dart-define=SCENARIO=empty` or `failed`. It keeps only the Dart code;
 [scripts/capture-flutter-example.sh](../scripts/capture-flutter-example.sh) adds the iOS runner
 with `flutter create` in a build folder and takes the Flutter screenshots on the same simulator.
+
+`Examples/react-native/reading-list/example/App.tsx` mounts the React Native screen in an app and
+reads the same `-scenario` launch argument on iOS.
+[scripts/capture-react-native-example.sh](../scripts/capture-react-native-example.sh) makes an app
+from the official React Native template in a build folder, adds the feature and that component,
+and takes the React Native screenshots from a Release build. The screen sets no colours of its
+own, so it is shown in light appearance only.
