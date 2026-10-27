@@ -26,7 +26,7 @@ public struct ReadingListView: View {
                             .font(.callout)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(.red.opacity(0.15), in: .rect(cornerRadius: 12))
+                            .background(.tint.opacity(0.15), in: .rect(cornerRadius: 12))
                             .padding()
                             .accessibilityAddTraits(.isStaticText)
                     }

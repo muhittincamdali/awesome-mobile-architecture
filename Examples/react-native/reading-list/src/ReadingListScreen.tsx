@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     textAlign: 'center',
-    backgroundColor: '#FDECEC',
+    backgroundColor: '#EAF4FF',
   },
 });
