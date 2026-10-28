@@ -29,13 +29,32 @@ jobs:
       working-directory: Examples/flutter/reading_list
       coverage: false
 
+  # Not the shared node-ci.yml: it serialises runs per repository and ref, so calling it here and
+  # from ci.yml cancels one of the two runs.
   react-native:
+    name: react-native / Node 24
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     permissions:
       contents: read
-    uses: muhittincamdali/.github/.github/workflows/node-ci.yml@59e72703c617cfab0c12482c477e706c485ed683 # v1.1.1
-    with:
-      working-directory: Examples/react-native/reading-list
-      node-versions: '["24"]'
+    defaults:
+      run:
+        working-directory: Examples/react-native/reading-list
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: Examples/react-native/reading-list/package-lock.json
+
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
 
   ios-app:
     name: ReadingListApp (iOS Simulator)
