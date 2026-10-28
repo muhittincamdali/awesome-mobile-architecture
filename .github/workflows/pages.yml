@@ -1,0 +1,69 @@
+# Renders README.md with the GitHub Markdown API, wraps it in site/template.html and publishes it
+# to GitHub Pages. The page uses no external assets; relative links point at the files on GitHub.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - site/**
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Render README
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Render
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p _site
+          # The badge and button images of the brand block load from raw.githubusercontent.com;
+          # the page has its own header, so the block is left out.
+          sed '/<!-- brand:start -->/,/<!-- brand:end -->/d' README.md > _site/body.md
+          gh api /markdown -f mode=gfm -f "context=$REPO" -F text=@_site/body.md > _site/body.html
+          python3 - <<'PY'
+          import os, re
+          repo = os.environ["REPO"]
+          blob = f"https://github.com/{repo}/blob/main/"
+          body = open("_site/body.html", encoding="utf-8").read()
+          body = re.sub(r'href="(?!https?:|#|mailto:)(?:\./)?([^"]+)"', lambda m: f'href="{blob}{m.group(1)}"', body)
+          body = re.sub(r'src="(?!https?:|data:)(?:\./)?([^"]+)"', lambda m: f'src="https://raw.githubusercontent.com/{repo}/main/{m.group(1)}"', body)
+          page = open("site/template.html", encoding="utf-8").read().replace("{{CONTENT}}", body)
+          open("_site/index.html", "w", encoding="utf-8").write(page)
+          PY
+          rm _site/body.md _site/body.html
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
