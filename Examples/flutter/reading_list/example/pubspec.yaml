@@ -1,0 +1,19 @@
+name: reading_list_example
+description: >-
+  Runs the reading list feature as an app. scripts/capture-flutter-example.sh builds it on an iOS
+  simulator for the screenshots in Examples/README.md.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.11.0
+  flutter: '>=3.41.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  reading_list:
+    path: ../
+
+dev_dependencies:
+  flutter_lints: ^6.0.0

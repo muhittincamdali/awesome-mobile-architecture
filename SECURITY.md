@@ -1,43 +1,21 @@
-# Security Policy
+# Security
 
-## Reporting a Vulnerability
+## What is in scope
 
-We take security seriously. If you discover a security vulnerability, please follow these steps:
+- **Links.** A listed link that now serves malware, phishing or content other than what its
+  entry describes.
+- **The list tooling** (`src/`). The staleness check sends the `GITHUB_TOKEN` it is given to the
+  GitHub API in the `Authorization` header only. Any way to make the tooling print, store or send
+  the token elsewhere, or to make it read unbounded input from `data/entries.json` or from an API
+  answer, is a security issue.
+- **The examples** (`Examples/`). Code that would teach an unsafe pattern if copied into an app,
+  for example showing an error's raw text (which can hold URLs or tokens) on screen.
 
-### How to Report
+## How to report
 
-1. **DO NOT** create a public GitHub issue
-2. Email the maintainer directly or use GitHub's private vulnerability reporting
-3. Include detailed information about the vulnerability
+Use GitHub's private vulnerability reporting on this repository (Security tab, "Report a
+vulnerability"), or email muhittincamdali@gmail.com. Please do not open a public issue for a
+problem in the tooling. A malicious link can be reported in a public issue with the "Report an
+outdated entry" form, since removing it quickly matters more than discretion.
 
-### What to Include
-
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if any)
-
-### Response Timeline
-
-- **Initial Response**: Within 48 hours
-- **Status Update**: Within 7 days
-- **Resolution**: Depends on complexity
-
-### Scope
-
-This security policy applies to:
-- Documentation content that could lead to insecure implementations
-- Links to malicious resources
-- Any code examples that contain security flaws
-
-## Supported Versions
-
-| Version | Supported          |
-| ------- | ------------------ |
-| Latest  | :white_check_mark: |
-
-## Recognition
-
-Contributors who report valid security issues will be acknowledged in our README (with permission).
-
-Thank you for helping keep this project safe!
+Reports get a first answer within a week. Only the `main` branch is maintained.

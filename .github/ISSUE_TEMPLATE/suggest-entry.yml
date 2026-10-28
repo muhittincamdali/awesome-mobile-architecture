@@ -1,0 +1,39 @@
+name: Suggest an entry
+description: Propose a guide, library, sample app or tool for the list
+title: "Suggest: "
+labels: ["entry"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Link
+      description: An https link to the page or repository.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - iOS
+        - Flutter
+        - React Native
+        - Concepts that apply everywhere
+    validations:
+      required: true
+  - type: input
+    id: why
+    attributes:
+      label: Why it belongs in the list
+      description: One sentence on what a reader gets from it, without words such as "best" or "fast".
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I have read or used it, not only seen it recommended.
+          required: true
+        - label: For a GitHub repository, it is not archived and had a push in the last 540 days.
+          required: true

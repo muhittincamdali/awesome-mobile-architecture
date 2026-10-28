@@ -1,0 +1,90 @@
+// Rules for the `url` field of an entry and the key that finds the same page listed twice.
+
+import { CHARACTER_REFERENCE, CHARACTER_REFERENCE_ERROR } from './text-rules.ts';
+
+export const MAX_URL_LENGTH = 300;
+// Names reserved for local networks, tests and documentation (RFC 2606, 6761, 6762,
+// 8375 and ICANN's .internal); no public site can be reached under them.
+const SPECIAL_USE_SUFFIXES = [
+  'localhost',
+  'local',
+  'internal',
+  'home.arpa',
+  'test',
+  'invalid',
+  'example',
+];
+
+/** Checks one link and returns it parsed, or undefined when it cannot be parsed at all. */
+export function checkUrl(
+  value: string,
+  where: string,
+  fail: (message: string) => void,
+): URL | undefined {
+  if (value.length > MAX_URL_LENGTH) {
+    fail(`${where}: longer than ${MAX_URL_LENGTH} characters`);
+    return undefined;
+  }
+  if (/\s/.test(value)) {
+    fail(`${where}: contains whitespace`);
+    return undefined;
+  }
+  if (CHARACTER_REFERENCE.test(value)) fail(`${where}: ${CHARACTER_REFERENCE_ERROR}`);
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    fail(`${where}: "${value}" is not a URL`);
+    return undefined;
+  }
+  if (url.protocol !== 'https:') fail(`${where}: must use https`);
+  if (url.username || url.password) fail(`${where}: must not contain credentials`);
+  if (!isPublicHostName(url.hostname)) fail(`${where}: must use a public host name`);
+  // `new URL` turns a Unicode host into punycode; such a host can imitate a known one
+  // (a Cyrillic "а" in "github.com"), so it is refused rather than reviewed by eye.
+  if (url.hostname.split('.').some((label) => label.startsWith('xn--'))) {
+    fail(`${where}: uses an internationalised host name; link the ASCII host instead`);
+  }
+  // A backslash before the closing ")" would escape it and run the link into the reason.
+  if (/[()<>\\]/.test(value)) fail(`${where}: contains characters that break a Markdown link`);
+  return url;
+}
+
+/**
+ * The host name as one site sees it: lower case, with one trailing dot removed ("github.com."
+ * is "github.com") and without a leading "www.". Undefined when a label is empty, as in
+ * "github.com..", ".github.com" or "github..com": no public site has such a name, and treating
+ * it as another spelling of a known host would let it slip past the rules for that host.
+ */
+export function siteHostName(hostname: string): string | undefined {
+  return dnsHostName(hostname)?.replace(/^www\./, '');
+}
+
+function dnsHostName(hostname: string): string | undefined {
+  const host = hostname.toLowerCase().replace(/\.$/, '');
+  return host.split('.').includes('') ? undefined : host;
+}
+
+/**
+ * False for IP addresses, special-use names, single-label names such as "intranet", which
+ * resolve only inside one network, and names with an empty label.
+ */
+function isPublicHostName(hostname: string): boolean {
+  const host = dnsHostName(hostname);
+  if (host === undefined) return false;
+  if (host.startsWith('[') || /^[\d.]+$/.test(host)) return false;
+  if (!host.includes('.')) return false;
+  return !SPECIAL_USE_SUFFIXES.some((suffix) => host === suffix || host.endsWith(`.${suffix}`));
+}
+
+/** Key used to find the same page listed twice. */
+export function normalizeUrl(value: string): string {
+  try {
+    const url = new URL(value);
+    const host = siteHostName(url.hostname) ?? url.hostname;
+    const path = url.pathname.replace(/\/+$/, '').toLowerCase();
+    return `${host}${path}${url.search}`;
+  } catch {
+    return value.toLowerCase();
+  }
+}

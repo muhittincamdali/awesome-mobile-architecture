@@ -1,0 +1,503 @@
+{
+  "entries": [
+    {
+      "name": "The Clean Architecture",
+      "url": "https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html",
+      "platform": "concepts",
+      "category": "guidance",
+      "why": "The original article on the dependency rule between layers, which most mobile clean-architecture templates build on.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Presentation Model",
+      "url": "https://martinfowler.com/eaaDev/PresentationModel.html",
+      "platform": "concepts",
+      "category": "guidance",
+      "why": "The pattern MVVM grew out of: the view's state and behaviour kept in a class you can test without a UI.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "The Elm Architecture",
+      "url": "https://guide.elm-lang.org/architecture/",
+      "platform": "concepts",
+      "category": "guidance",
+      "why": "Model, update, view: the unidirectional loop behind TCA, Redux and BLoC, explained in a few short pages.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Guide to app architecture (Android)",
+      "url": "https://developer.android.com/topic/architecture",
+      "platform": "concepts",
+      "category": "guidance",
+      "why": "Google's UI layer, data layer and unidirectional data flow guide; the same split is used on iOS, Flutter and React Native.",
+      "verified": "2026-10-28"
+    },
+
+    {
+      "name": "Managing model data in your app",
+      "url": "https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app",
+      "platform": "ios",
+      "category": "guidance",
+      "why": "Apple's walkthrough of `@Observable` models and who owns them with `@State`, `@Environment` and `@Bindable`.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Migrating to the Observable macro",
+      "url": "https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro",
+      "platform": "ios",
+      "category": "guidance",
+      "why": "The exact edits that move an `ObservableObject` view model to `@Observable`, and how view updates change.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "TN3187 UIKit scene-based life cycle",
+      "url": "https://developer.apple.com/documentation/technotes/tn3187-migrating-to-the-uikit-scene-based-life-cycle",
+      "platform": "ios",
+      "category": "guidance",
+      "why": "Apple's technote for moving an app delegate-only app to `UIScene`, which apps built with the iOS 27 SDK must adopt.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Swift 6 migration guide",
+      "url": "https://www.swift.org/migration/documentation/migrationguide/",
+      "platform": "ios",
+      "category": "guidance",
+      "why": "Data-race safety, `Sendable` and actor isolation step by step: the rules every Swift 6 architecture has to fit.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Discover Observation in SwiftUI",
+      "url": "https://developer.apple.com/videos/play/wwdc2023/10149/",
+      "platform": "ios",
+      "category": "guidance",
+      "why": "WWDC23 session on how Observation tracks the properties a view reads, the basis of current SwiftUI view models.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "The Composable Architecture",
+      "url": "https://github.com/pointfreeco/swift-composable-architecture",
+      "repo": "pointfreeco/swift-composable-architecture",
+      "platform": "ios",
+      "category": "state",
+      "why": "Reducers, effects and dependencies in one library, with a test store that asserts every state change.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Workflow (Swift)",
+      "url": "https://github.com/square/workflow-swift",
+      "repo": "square/workflow-swift",
+      "platform": "ios",
+      "category": "state",
+      "why": "Square's composable state machines that render UI, with a matching Kotlin library for the Android app.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Swift Sharing",
+      "url": "https://github.com/pointfreeco/swift-sharing",
+      "repo": "pointfreeco/swift-sharing",
+      "platform": "ios",
+      "category": "state",
+      "why": "Shares and persists state between features (user defaults, files, memory) through one property wrapper.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Swift Async Algorithms",
+      "url": "https://github.com/apple/swift-async-algorithms",
+      "repo": "apple/swift-async-algorithms",
+      "platform": "ios",
+      "category": "state",
+      "why": "Debounce, throttle, merge and other `AsyncSequence` operators that replace Combine pipelines in view models.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Swift Dependencies",
+      "url": "https://github.com/pointfreeco/swift-dependencies",
+      "repo": "pointfreeco/swift-dependencies",
+      "platform": "ios",
+      "category": "dependency-injection",
+      "why": "Environment-style dependency injection that also works outside views and swaps in test values per test.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Factory",
+      "url": "https://github.com/hmlongco/Factory",
+      "repo": "hmlongco/Factory",
+      "platform": "ios",
+      "category": "dependency-injection",
+      "why": "Container-based injection with compile-time checked registrations and per-test overrides, without code generation.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Needle",
+      "url": "https://github.com/uber/needle",
+      "repo": "uber/needle",
+      "platform": "ios",
+      "category": "dependency-injection",
+      "why": "Uber's compile-time checked dependency graph, generated from code and built for apps with many modules.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Swinject",
+      "url": "https://github.com/Swinject/Swinject",
+      "repo": "Swinject/Swinject",
+      "platform": "ios",
+      "category": "dependency-injection",
+      "why": "Runtime container with object scopes, common in UIKit code bases that resolve dependencies at startup.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Swift Navigation",
+      "url": "https://github.com/pointfreeco/swift-navigation",
+      "repo": "pointfreeco/swift-navigation",
+      "platform": "ios",
+      "category": "navigation",
+      "why": "State-driven navigation for SwiftUI, UIKit and AppKit: a destination is an optional or an enum case in the model.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "XCoordinator",
+      "url": "https://github.com/QuickBirdEng/XCoordinator",
+      "repo": "QuickBirdEng/XCoordinator",
+      "platform": "ios",
+      "category": "navigation",
+      "why": "Coordinator pattern for UIKit with typed routes, so view controllers no longer push each other.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "TCA example apps",
+      "url": "https://github.com/pointfreeco/swift-composable-architecture/tree/main/Examples",
+      "repo": "pointfreeco/swift-composable-architecture",
+      "platform": "ios",
+      "category": "samples",
+      "why": "Case studies plus Todos, Voice Memos, SyncUps and Search apps, kept in step with each library release.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Clean Architecture for SwiftUI",
+      "url": "https://github.com/nalexn/clean-architecture-swiftui",
+      "repo": "nalexn/clean-architecture-swiftui",
+      "platform": "ios",
+      "category": "samples",
+      "why": "SwiftUI app with SwiftData persistence, networking, dependency injection and unit tests in separate layers.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "iOS Clean Architecture MVVM",
+      "url": "https://github.com/kudoleh/iOS-Clean-Architecture-MVVM",
+      "repo": "kudoleh/iOS-Clean-Architecture-MVVM",
+      "platform": "ios",
+      "category": "samples",
+      "why": "UIKit template with a DI container, flow coordinators, DTO mapping and response caching across layers.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "SnapshotTesting",
+      "url": "https://github.com/pointfreeco/swift-snapshot-testing",
+      "repo": "pointfreeco/swift-snapshot-testing",
+      "platform": "ios",
+      "category": "testing",
+      "why": "Records views and values as reference files and fails on changes, catching UI regressions unit tests miss.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Tuist",
+      "url": "https://github.com/tuist/tuist",
+      "repo": "tuist/tuist",
+      "platform": "ios",
+      "category": "tooling",
+      "why": "Generates Xcode projects from Swift manifests, which keeps module boundaries explicit as an app grows.",
+      "verified": "2026-10-28"
+    },
+
+    {
+      "name": "Guide to app architecture (Flutter)",
+      "url": "https://docs.flutter.dev/app-architecture/guide",
+      "platform": "flutter",
+      "category": "guidance",
+      "why": "The Flutter team's recommended layers (UI, data, optional domain) built from views, view models and repositories.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Architecture case study",
+      "url": "https://docs.flutter.dev/app-architecture/case-study",
+      "platform": "flutter",
+      "category": "guidance",
+      "why": "Walks through the Compass app to show the guide applied to real code, layer by layer.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Architecture recommendations",
+      "url": "https://docs.flutter.dev/app-architecture/recommendations",
+      "platform": "flutter",
+      "category": "guidance",
+      "why": "Each recommendation is rated strongly recommended, recommended or conditional, so you know what is optional.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "State management options",
+      "url": "https://docs.flutter.dev/data-and-backend/state-mgmt/options",
+      "platform": "flutter",
+      "category": "guidance",
+      "why": "The official index of state management approaches, with links to each package's own documentation.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "UIScene adoption",
+      "url": "https://docs.flutter.dev/release/breaking-changes/uiscenedelegate",
+      "platform": "flutter",
+      "category": "guidance",
+      "why": "What changes for the iOS runner of a Flutter app when `UIScene` becomes required, and how to migrate it.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Bloc",
+      "url": "https://github.com/felangel/bloc",
+      "repo": "felangel/bloc",
+      "platform": "flutter",
+      "category": "state",
+      "why": "Events in, states out: business logic kept out of widgets and tested with `bloc_test`.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Riverpod",
+      "url": "https://github.com/rrousselGit/riverpod",
+      "repo": "rrousselGit/riverpod",
+      "platform": "flutter",
+      "category": "state",
+      "why": "Compile-safe providers for async state, caching and dependency injection, testable without a widget tree.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Provider",
+      "url": "https://github.com/rrousselGit/provider",
+      "repo": "rrousselGit/provider",
+      "platform": "flutter",
+      "category": "state",
+      "why": "A thin layer over `InheritedWidget` for injecting `ChangeNotifier` models; the Flutter docs start with it.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "MobX for Dart",
+      "url": "https://github.com/mobxjs/mobx.dart",
+      "repo": "mobxjs/mobx.dart",
+      "platform": "flutter",
+      "category": "state",
+      "why": "Observables, actions and reactions with code generation, for teams that prefer reactive state.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Signals.dart",
+      "url": "https://github.com/rodydavis/signals.dart",
+      "repo": "rodydavis/signals.dart",
+      "platform": "flutter",
+      "category": "state",
+      "why": "Fine-grained reactive signals for Dart and Flutter that rebuild only the widgets reading a changed value.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Freezed",
+      "url": "https://github.com/rrousselGit/freezed",
+      "repo": "rrousselGit/freezed",
+      "platform": "flutter",
+      "category": "state",
+      "why": "Generates immutable state classes, sealed unions and `copyWith`, removing boilerplate from state objects.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "get_it",
+      "url": "https://github.com/flutter-it/get_it",
+      "repo": "flutter-it/get_it",
+      "platform": "flutter",
+      "category": "dependency-injection",
+      "why": "Service locator for repositories and services that is reachable outside the widget tree.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "go_router",
+      "url": "https://pub.dev/packages/go_router",
+      "repo": "flutter/packages",
+      "platform": "flutter",
+      "category": "navigation",
+      "why": "URL-based declarative routing maintained by the Flutter team, with deep links, redirects and nested navigators.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Compass app",
+      "url": "https://github.com/flutter/samples/tree/main/compass_app",
+      "repo": "flutter/samples",
+      "platform": "flutter",
+      "category": "samples",
+      "why": "The official sample behind the architecture guide, with unit, widget and integration tests.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Flutter architecture samples",
+      "url": "https://github.com/brianegan/flutter_architecture_samples",
+      "repo": "brianegan/flutter_architecture_samples",
+      "platform": "flutter",
+      "category": "samples",
+      "why": "One todo app built with BLoC, Redux, MobX, signals and more, so the approaches can be compared side by side.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Bloc examples",
+      "url": "https://github.com/felangel/bloc/tree/master/examples",
+      "repo": "felangel/bloc",
+      "platform": "flutter",
+      "category": "samples",
+      "why": "Counter, timer, login, todos, infinite list and weather apps, each built with bloc and covered by tests.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Very Good CLI",
+      "url": "https://github.com/VeryGoodOpenSource/very_good_cli",
+      "repo": "VeryGoodOpenSource/very_good_cli",
+      "platform": "flutter",
+      "category": "tooling",
+      "why": "Creates apps and packages with a layered structure, tests and strict lints already set up.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Melos",
+      "url": "https://github.com/invertase/melos",
+      "repo": "invertase/melos",
+      "platform": "flutter",
+      "category": "tooling",
+      "why": "Runs scripts, versioning and publishing across a Dart workspace when an app is split into feature packages.",
+      "verified": "2026-10-28"
+    },
+
+    {
+      "name": "About the New Architecture",
+      "url": "https://reactnative.dev/architecture/landing-page",
+      "platform": "react-native",
+      "category": "guidance",
+      "why": "Explains Fabric, TurboModules and JSI, the architecture new React Native apps have used by default since 0.76.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Managing State (React)",
+      "url": "https://react.dev/learn/managing-state",
+      "platform": "react-native",
+      "category": "guidance",
+      "why": "React's own guide to structuring state, lifting it up and moving it into reducers and context.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Testing overview",
+      "url": "https://reactnative.dev/docs/testing-overview",
+      "platform": "react-native",
+      "category": "guidance",
+      "why": "The official map of unit, component and end-to-end tests and which layer of an app each one covers.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Redux Toolkit",
+      "url": "https://github.com/reduxjs/redux-toolkit",
+      "repo": "reduxjs/redux-toolkit",
+      "platform": "react-native",
+      "category": "state",
+      "why": "The official way to write Redux: slices, immutable updates written as mutations and RTK Query for server data.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Zustand",
+      "url": "https://github.com/pmndrs/zustand",
+      "repo": "pmndrs/zustand",
+      "platform": "react-native",
+      "category": "state",
+      "why": "A small hook-based store that needs no provider; selectors keep re-renders limited to what changed.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Jotai",
+      "url": "https://github.com/pmndrs/jotai",
+      "repo": "pmndrs/jotai",
+      "platform": "react-native",
+      "category": "state",
+      "why": "Atomic state: compose small atoms instead of one global store, with derived atoms for computed values.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "MobX",
+      "url": "https://github.com/mobxjs/mobx",
+      "repo": "mobxjs/mobx",
+      "platform": "react-native",
+      "category": "state",
+      "why": "Observable state with automatic dependency tracking; a component re-renders only when what it read changes.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "TanStack Query",
+      "url": "https://github.com/TanStack/query",
+      "repo": "TanStack/query",
+      "platform": "react-native",
+      "category": "state",
+      "why": "Keeps server data in its own layer with caching, refetching and retries, separate from UI state.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "XState",
+      "url": "https://github.com/statelyai/xstate",
+      "repo": "statelyai/xstate",
+      "platform": "react-native",
+      "category": "state",
+      "why": "State machines and statecharts for flows with many states and transitions, such as checkout or onboarding.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Legend-State",
+      "url": "https://github.com/LegendApp/legend-state",
+      "repo": "LegendApp/legend-state",
+      "platform": "react-native",
+      "category": "state",
+      "why": "Fine-grained reactive state with built-in persistence, for apps that keep data on the device.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Expo Router",
+      "url": "https://docs.expo.dev/router/introduction/",
+      "repo": "expo/expo",
+      "platform": "react-native",
+      "category": "navigation",
+      "why": "File-based routing for Expo and React Native apps, where every screen gets a URL and deep links work.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "React Navigation",
+      "url": "https://github.com/react-navigation/react-navigation",
+      "repo": "react-navigation/react-navigation",
+      "platform": "react-native",
+      "category": "navigation",
+      "why": "Stack, tab and drawer navigators for React Native; Expo Router is built on top of it.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Ignite",
+      "url": "https://github.com/infinitered/ignite",
+      "repo": "infinitered/ignite",
+      "platform": "react-native",
+      "category": "samples",
+      "why": "Infinite Red's boilerplate and generators: a complete app structure with state, navigation and tests.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "Obytes React Native template",
+      "url": "https://github.com/obytes/react-native-template-obytes",
+      "repo": "obytes/react-native-template-obytes",
+      "platform": "react-native",
+      "category": "samples",
+      "why": "Expo and TypeScript starter with Expo Router, React Query, form handling and CI already wired together.",
+      "verified": "2026-10-28"
+    },
+    {
+      "name": "React Native Testing Library",
+      "url": "https://github.com/callstack/react-native-testing-library",
+      "repo": "callstack/react-native-testing-library",
+      "platform": "react-native",
+      "category": "testing",
+      "why": "Queries components the way a user finds them, so tests survive refactors of the code behind a screen.",
+      "verified": "2026-10-28"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+name: Report an outdated entry
+description: A link is broken, a project moved or stopped, or a "why" line is no longer true
+title: "Outdated: "
+labels: ["entry", "outdated"]
+body:
+  - type: input
+    id: entry
+    attributes:
+      label: Entry name
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Problem
+      options:
+        - The link is broken
+        - The repository moved or was renamed
+        - The project is archived or no longer maintained
+        - The "why" line is no longer accurate
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What you found, and a replacement if you know one.
+    validations:
+      required: false

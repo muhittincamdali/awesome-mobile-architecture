@@ -1,0 +1,27 @@
+{
+  "name": "reading-list-react-native",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The reading list feature of awesome-mobile-architecture in React Native: a framework-free store between a repository and a screen that only renders state.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "lint": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-native": "0.88.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "prettier": "3.9.10",
+    "react-native-safe-area-context": "5.11.0",
+    "typescript": "7.0.2",
+    "vitest": "5.0.4"
+  }
+}

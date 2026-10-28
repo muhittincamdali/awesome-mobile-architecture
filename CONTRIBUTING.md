@@ -1,90 +1,69 @@
-# Contributing to Awesome Mobile Architecture
+# Contributing
 
-First off, thank you for considering contributing to Awesome Mobile Architecture! It's people like you that make this curated list such a great resource for the mobile development community.
+Thanks for helping keep this list useful. Suggestions, corrections and removals are all welcome;
+a removal of an outdated entry is as valuable as a new one.
 
-## Code of Conduct
+## Suggest or change an entry
 
-This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+1. Open the link and read it. An entry is only added by someone who has read it or used it.
+2. Add or edit the entry in [data/entries.json](data/entries.json):
 
-## How Can I Contribute?
+    ```json
+    {
+        "name": "Riverpod",
+        "url": "https://github.com/rrousselGit/riverpod",
+        "repo": "rrousselGit/riverpod",
+        "platform": "flutter",
+        "category": "state",
+        "why": "Compile-safe providers for async state, caching and dependency injection, testable without a widget tree.",
+        "verified": "2026-10-28"
+    }
+    ```
 
-### Adding New Resources
+    The rules for each field are in [How the list is kept current](docs/guides/keeping-the-list-current.md).
+    The short version: `why` is one sentence of 20-160 characters that says what the reader gets
+    and holds no link of its own, `verified` is today's date, and a GitHub link needs the matching `repo`.
 
-The best way to contribute is by adding new high-quality resources. When suggesting a new resource, please ensure:
+3. Render the README and run the checks (Node 24):
 
-- **Quality over quantity** - Only suggest resources that are genuinely helpful
-- **Active and maintained** - For repositories, prefer those with recent activity
-- **Well-documented** - Resources should have good documentation
-- **Relevant to mobile architecture** - Must relate to iOS, Android, Flutter, or React Native architecture patterns
+    ```sh
+    npm ci
+    npm run list:render
+    npm test
+    ```
 
-### Submission Guidelines
+4. Open a pull request with the data file and README.md. CI runs the same checks, the link
+   checker and the staleness check for the repositories you added.
 
-1. **Use a clear and descriptive title**
-2. **Provide the correct category** - Place the resource in the most appropriate section
-3. **Follow the existing format** - Use the same markdown format as existing entries
-4. **Verify all links work** - Double-check that URLs are correct and accessible
-5. **No duplicates** - Check that the resource isn't already in the list
+If you cannot run Node, open an issue with the "Suggest an entry" or "Report an outdated entry"
+form instead.
 
-### Resource Format
+## Change an example
 
-```markdown
-- [Resource Name](URL) - Brief description of what it offers.
+Each example under [Examples/](Examples/README.md) implements the same rules, and each test
+suite checks all of them. A change to one rule belongs in all three examples and their tests:
+
+```sh
+cd Examples/ios/ReadingList && swift test
+cd Examples/flutter/reading_list && flutter analyze && flutter test
+cd Examples/react-native/reading-list && npm ci && npm run typecheck && npm test
 ```
 
-For repositories:
-```markdown
-- [repo-name](https://github.com/user/repo) - Description. `Language` `Stars`
-```
+If a screen changes, regenerate its screenshots with `scripts/capture-ios-example.sh`,
+`scripts/capture-flutter-example.sh` or `scripts/capture-react-native-example.sh` on a Mac with
+Xcode 27 (plus Flutter 3.41, or Node 24 and CocoaPods, for the last two).
 
-### Pull Requests
+## Change the tooling
 
-1. Fork the repo and create your branch from `main`
-2. Make your changes following the guidelines above
-3. Ensure all links are working
-4. Submit your pull request with a clear description
+The checker is TypeScript in `src/`, run directly by Node 24 and tested with Vitest in `test/`.
+`npm run typecheck`, `npm run lint` and `npm test` must pass. Input from `data/entries.json`
+arrives through pull requests, so keep every size bounded and every field validated.
 
-## Development Setup
+## Translations
 
-```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/awesome-mobile-architecture.git
+README.md is written in English first. The other languages follow in a separate pass; please do
+not edit translated READMEs in the same pull request as an English change.
 
-# Navigate to the project
-cd awesome-mobile-architecture
+## Code of conduct
 
-# Make your changes to README.md
-```
-
-## Quality Standards
-
-Resources should meet these criteria:
-
-- ✅ Well-written and accurate content
-- ✅ Active community or maintenance
-- ✅ Good documentation
-- ✅ Relevant to mobile architecture
-- ✅ Not promotional or spam
-
-## Commit Messages
-
-We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
-
-- `feat:` Adding new resources
-- `fix:` Fixing broken links or errors
-- `docs:` Documentation improvements
-- `refactor:` Reorganizing sections
-- `chore:` Maintenance tasks
-
-Example: `feat(mvvm): add SwiftUI MVVM tutorial series`
-
-## Questions?
-
-Feel free to open an issue if you have any questions about contributing.
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
-
----
-
-Thank you for helping make Awesome Mobile Architecture better! 🙏
+This project follows the [Code of Conduct](CODE_OF_CONDUCT.md).
